@@ -1,0 +1,104 @@
+.hero {
+  padding: 5rem 0 3rem;
+  text-align: center;
+  background: radial-gradient(
+    ellipse at top,
+    color-mix(in srgb, var(--accent) 12%, transparent),
+    transparent 70%
+  );
+}
+
+.title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: var(--fg-muted);
+  max-width: 42ch;
+  margin: 0 auto 2rem;
+}
+
+.cta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+.primaryBtn {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.primaryBtn:hover {
+  background: var(--accent-hover);
+  text-decoration: none;
+}
+.secondaryBtn {
+  border: 1px solid var(--border);
+  color: var(--fg);
+}
+.secondaryBtn:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.install {
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.features {
+  padding: 3rem 0;
+}
+
+.sectionTitle {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  margin: 0 0 1.5rem;
+}
+
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  background: var(--bg-subtle);
+}
+
+.cardTitle {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.cardBody {
+  margin: 0;
+  color: var(--fg-muted);
+}
+
+.quickstart {
+  padding: 2rem 0 3rem;
+}
+
+.quickstartLede {
+  color: var(--fg-muted);
+  margin-top: 0;
+}

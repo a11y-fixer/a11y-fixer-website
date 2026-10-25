@@ -1,0 +1,30 @@
+import Link from "next/link";
+import { site } from "../lib/site";
+import styles from "./Header.module.css";
+
+export default function Header() {
+  return (
+    <header className={styles.header}>
+      <div className={`container ${styles.inner}`}>
+        <Link href="/" className={styles.brand}>
+          {site.name}
+        </Link>
+        <nav aria-label="Primary">
+          <ul className={styles.nav}>
+            <li>
+              <Link href="/#features">Features</Link>
+            </li>
+            <li>
+              <Link href="/docs">Docs</Link>
+            </li>
+            <li>
+              <a href={site.repoUrl} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+}

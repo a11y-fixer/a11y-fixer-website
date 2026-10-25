@@ -1,0 +1,15 @@
+.pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pre code {
+  color: var(--fg);
+  white-space: pre;
+}
