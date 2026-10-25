@@ -1,0 +1,84 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2.5rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2rem;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 76px;
+}
+
+.sidebarTitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+  margin: 0 0 0.5rem;
+}
+
+.sidebarList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.sidebarList a {
+  color: var(--fg-muted);
+}
+.sidebarList a:hover {
+  color: var(--fg);
+}
+
+.content {
+  min-width: 0;
+}
+
+.h1 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  margin: 0 0 0.5rem;
+}
+
+.lede {
+  color: var(--fg-muted);
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+.h2 {
+  font-size: 1.5rem;
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 0.5rem;
+  scroll-margin-top: 76px;
+}
+
+.content :global(code) {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+
+.content :global(pre code) {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+@media (max-width: 720px) {
+  .wrap {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .sidebar {
+    position: static;
+  }
+}
