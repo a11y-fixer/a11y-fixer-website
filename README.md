@@ -19,17 +19,19 @@ npm run build   # static export written to ./out
 ## Deploy
 
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the static
-export and publishes it to GitHub Pages at **https://a11y-fixer.github.io/website/**.
+export and publishes it to GitHub Pages at the custom domain **https://a11y-fixer.com**.
 
 **One-time setup:** in the repo on GitHub, go to **Settings → Pages → Build and
 deployment → Source** and choose **GitHub Actions**.
 
 ## Notes
 
-- Because the site is served from the `/website/` subpath, `next.config.mjs` sets
-  `basePath`/`assetPrefix` to `/website` in production builds only (local dev stays at `/`).
-- To use a **custom domain** instead: set `basePath`/`assetPrefix` back to empty in
-  `next.config.mjs` and add a `public/CNAME` file containing the domain.
+- The site is served from the apex domain `a11y-fixer.com`, configured via
+  `public/CNAME`. Because it lives at the root, `next.config.mjs` sets no
+  `basePath`/`assetPrefix`.
+- DNS is managed in Cloudflare: apex `A`/`AAAA` records point at GitHub Pages
+  (or a CNAME-flattened record to `a11y-fixer.github.io`). Keep the records
+  **DNS-only** (not proxied) so GitHub can provision the TLS certificate.
 
 ## Editing content
 
