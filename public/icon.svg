@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="a11y-fixer">
+  <rect width="64" height="64" rx="14" fill="#1f6feb"/>
+  <!-- Universal accessibility figure -->
+  <g fill="#ffffff">
+    <circle cx="32" cy="16" r="5"/>
+    <path d="M16 25 h32 a2.5 2.5 0 0 1 0 5 H40 v4 l4 15 a2.6 2.6 0 0 1 -4.9 1.7 L35 37 h-6 l-4.1 13.7 A2.6 2.6 0 0 1 20 49 l4-15 v-4 h-8 a2.5 2.5 0 0 1 0 -5 Z"/>
+  </g>
+</svg>

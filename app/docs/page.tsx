@@ -5,7 +5,10 @@ import styles from "./docs.module.css";
 
 export const metadata: Metadata = {
   title: "Documentation",
-  description: `Getting started with ${site.name}: install, usage, configuration, and CI.`,
+  description: `${site.name} documentation: install the CLI, scan pages for WCAG violations, apply automated fixes, configure rules, and gate pull requests in CI.`,
+  alternates: {
+    canonical: "/docs",
+  },
 };
 
 // {/* TODO: replace example commands/flags with the real a11y-fixer CLI */}
