@@ -94,6 +94,28 @@
   color: var(--fg-muted);
 }
 
+.whatsNext {
+  padding: 3rem 0;
+}
+
+.statusTag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.1rem 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.getInTouch {
+  color: var(--fg-muted);
+  margin: 1.5rem 0 0;
+}
+
 .quickstart {
   padding: 2rem 0 3rem;
 }

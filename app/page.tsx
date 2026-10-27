@@ -31,6 +31,20 @@ const features = [
   },
 ];
 
+// {/* TODO: confirm roadmap items against the real a11y-fixer */}
+const roadmap = [
+  {
+    title: "AI-assisted fixes",
+    status: "In progress",
+    body: "LLM-powered suggestions for issues that need judgment — rewriting unclear link text or alt descriptions. These are non-deterministic by nature, so every change is proposed for review before it lands.",
+  },
+  {
+    title: "GitHub Actions workflow",
+    status: "Planned",
+    body: "A first-class GitHub Action to gate pull requests on accessibility, with inline annotations on the files you changed.",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -70,6 +84,25 @@ export default function Home() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className={styles.whatsNext}>
+        <div className="container">
+          <h2 className={styles.sectionTitle}>What&apos;s next</h2>
+          <ul className={styles.grid}>
+            {roadmap.map((r) => (
+              <li key={r.title} className={styles.card}>
+                <span className={styles.statusTag}>{r.status}</span>
+                <h3 className={styles.cardTitle}>{r.title}</h3>
+                <p className={styles.cardBody}>{r.body}</p>
+              </li>
+            ))}
+          </ul>
+          <p className={styles.getInTouch}>
+            Have ideas or want to help shape these?{" "}
+            <a href={`mailto:${site.contactEmail}`}>Get in touch</a>.
+          </p>
         </div>
       </section>
 

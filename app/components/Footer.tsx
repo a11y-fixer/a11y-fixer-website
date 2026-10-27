@@ -28,6 +28,9 @@ export default function Footer() {
                 Report an issue
               </a>
             </li>
+            <li>
+              <a href={`mailto:${site.contactEmail}`}>Contact</a>
+            </li>
           </ul>
         </nav>
       </div>
