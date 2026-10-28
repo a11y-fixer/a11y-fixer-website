@@ -7,6 +7,8 @@ export default function Header() {
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.brand}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon.svg" alt="" aria-hidden="true" width="28" height="28" />
           {site.name}
         </Link>
         <nav aria-label="Primary">
