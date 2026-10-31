@@ -1,3 +1,7 @@
+.figure {
+  margin: 0;
+}
+
 .pre {
   background: var(--code-bg);
   border: 1px solid var(--border);
