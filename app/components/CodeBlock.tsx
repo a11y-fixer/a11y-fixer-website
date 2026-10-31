@@ -8,8 +8,11 @@ export default function CodeBlock({
   label?: string;
 }) {
   return (
-    <pre className={styles.pre} aria-label={label}>
-      <code>{children}</code>
-    </pre>
+    <figure className={styles.figure}>
+      {label && <figcaption className="visually-hidden">{label}</figcaption>}
+      <pre className={styles.pre}>
+        <code>{children}</code>
+      </pre>
+    </figure>
   );
 }
