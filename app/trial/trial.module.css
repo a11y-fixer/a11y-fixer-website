@@ -1,0 +1,103 @@
+.section {
+  padding: 4rem 0 3rem;
+}
+
+.lede {
+  color: var(--fg-muted);
+  max-width: 60ch;
+  margin: 0 0 2rem;
+}
+
+.form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  max-width: 480px;
+}
+
+.field {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 1rem;
+}
+
+.submit {
+  align-self: flex-end;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Honeypot: off-screen, not announced to assistive tech. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.error {
+  color: #d1242f;
+  margin: 1rem 0 0;
+}
+@media (prefers-color-scheme: dark) {
+  .error {
+    color: #ff7b72;
+  }
+}
+
+.result {
+  margin-top: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  background: var(--bg-subtle);
+}
+
+.resultTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.expiry {
+  color: var(--fg-muted);
+  margin: 0 0 1.25rem;
+}
+
+.step {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+}
+
+.note {
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+}
