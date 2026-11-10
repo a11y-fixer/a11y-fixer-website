@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-// Served from the apex custom domain a11y-fixer.com (see public/CNAME),
-// so assets live at the root — no basePath/assetPrefix needed.
+// Deployed on Vercel (served from the apex custom domain a11y-fixer.com).
+// Not a static export: the trial-key issuer at app/api/trial needs a Node
+// server runtime to sign license keys, so `output: "export"` is intentionally
+// absent.
 const nextConfig = {
-  output: "export",
-  images: { unoptimized: true },
   trailingSlash: true,
 };
 

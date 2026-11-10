@@ -20,6 +20,9 @@ export default function Header() {
               <Link href="/docs">Docs</Link>
             </li>
             <li>
+              <Link href="/trial">Free trial</Link>
+            </li>
+            <li>
               <a href={site.repoUrl} target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>
