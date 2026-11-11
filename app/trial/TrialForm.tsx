@@ -59,12 +59,12 @@ export default function TrialForm() {
           <strong>1.</strong> Add it as a repository secret named{" "}
           <code>{SECRET_NAME}</code> (Settings → Secrets and variables → Actions):
         </p>
-        <CodeBlock label="Your license key">{result.token}</CodeBlock>
+        <CodeBlock label="Your license key" copyable>{result.token}</CodeBlock>
 
         <p className={styles.step}>
           <strong>2.</strong> Reference it in your workflow:
         </p>
-        <CodeBlock label="Workflow usage">{workflowSnippet(SECRET_NAME)}</CodeBlock>
+        <CodeBlock label="Workflow usage" copyable>{workflowSnippet(SECRET_NAME)}</CodeBlock>
 
         <p className={styles.note}>
           Need a fresh key after it expires? Just come back and request another.
