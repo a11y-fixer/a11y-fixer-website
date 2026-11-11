@@ -1,5 +1,6 @@
 .figure {
   margin: 0;
+  position: relative;
 }
 
 .pre {
@@ -11,6 +12,32 @@
   font-size: 0.9rem;
   line-height: 1.5;
   margin: 0;
+}
+
+.copyBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.copyBtn:hover {
+  color: var(--fg);
+  border-color: var(--fg-muted);
+}
+
+.copyBtn.copied {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
 }
 
 .pre code {
