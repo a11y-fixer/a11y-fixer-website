@@ -1,0 +1,57 @@
+---
+title: "How to fix missing image alt text (WCAG 1.1.1)"
+description: "Missing or empty alt text is the most common accessibility failure. Learn what WCAG 1.1.1 requires, how to write good alt text, and how to fix it automatically."
+date: "2026-11-10"
+type: "guide"
+keywords:
+  - "missing alt text"
+  - "image alt text accessibility"
+  - "WCAG 1.1.1"
+  - "alt attribute"
+---
+
+Missing alternative text on images is consistently the single most common accessibility failure on the web. It fails [WCAG 2.2 Success Criterion 1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html), which requires that every non-text element has a text alternative that serves an equivalent purpose.
+
+## Why it matters
+
+Screen reader users rely on the `alt` attribute to understand what an image conveys. When `alt` is missing, many screen readers fall back to announcing the file name — so a user hears "DSC_00421 dot jpg" instead of "Bar chart showing revenue up 20% year over year." When the image is purely decorative but has no `alt` at all, it still gets announced, adding noise.
+
+## The failing markup
+
+```html
+<img src="/revenue-chart.png">
+<img src="/divider.png">
+```
+
+The first image carries meaning but has no text alternative. The second is decorative but will still be announced.
+
+## The fix
+
+Add a descriptive `alt` for informative images, and an **empty** `alt=""` for decorative ones so assistive tech skips them:
+
+```html
+<!-- Informative: describe the content and its purpose -->
+<img src="/revenue-chart.png"
+     alt="Bar chart: revenue up 20% year over year">
+
+<!-- Decorative: empty alt removes it from the accessibility tree -->
+<img src="/divider.png" alt="">
+```
+
+### Writing good alt text
+
+- Describe the **purpose**, not just the appearance. For a logo that links home, `alt="a11y-fixer home"` beats `alt="logo"`.
+- Keep it concise — a sentence or less. The surrounding content provides context.
+- Don't start with "Image of…"; screen readers already announce the role.
+- For complex images (charts, diagrams), provide a short `alt` plus a longer description nearby.
+
+## Fix it automatically
+
+`a11y-fixer` flags every `<img>`, `<area>`, and `role="img"` element missing a text alternative and, where it can infer intent safely, proposes a fix for review:
+
+```bash
+a11y-fixer scan ./dist
+a11y-fixer fix ./dist --write
+```
+
+Decorative images detected from context get `alt=""`; informative images are surfaced for a human to describe. Read the [fix catalog in the docs](/docs/) for the full list of what gets repaired automatically.

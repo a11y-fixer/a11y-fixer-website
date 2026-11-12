@@ -1,0 +1,70 @@
+---
+title: "How to fix missing document language and landmark roles"
+description: "A missing lang attribute and absent landmarks make pages hard to navigate with a screen reader. Learn how to fix both, and automate the check in CI."
+date: "2026-11-02"
+type: "guide"
+keywords:
+  - "html lang attribute"
+  - "landmark roles"
+  - "WCAG 3.1.1"
+  - "page structure accessibility"
+---
+
+Two structural issues quietly degrade accessibility on many sites: a missing document language, and the absence of landmark regions. Both are easy to fix and high-impact.
+
+## Document language (WCAG 3.1.1)
+
+[WCAG 3.1.1 Language of Page](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) requires that the default human language of each page is programmatically set. Without it, screen readers may use the wrong pronunciation rules — English read with Spanish phonetics, for example.
+
+```html
+<!-- ❌ -->
+<html>
+
+<!-- ✅ -->
+<html lang="en">
+```
+
+For a section in a different language, set it locally:
+
+```html
+<p>She said <span lang="fr">bonjour</span> and left.</p>
+```
+
+## Landmark roles
+
+Landmarks let screen reader users jump directly to the main regions of a page. Modern HTML5 elements map to landmark roles automatically:
+
+| Element | Landmark role |
+| --- | --- |
+| `<header>` (top level) | `banner` |
+| `<nav>` | `navigation` |
+| `<main>` | `main` |
+| `<footer>` (top level) | `contentinfo` |
+| `<aside>` | `complementary` |
+
+### The fix
+
+Wrap your page in semantic regions and include exactly one `<main>`:
+
+```html
+<body>
+  <header>…</header>
+  <nav aria-label="Primary">…</nav>
+  <main id="main">…</main>
+  <footer>…</footer>
+</body>
+```
+
+- Use **one** `<main>` per page.
+- Give multiple `<nav>` elements distinct `aria-label`s.
+- Add a "skip to content" link targeting `#main` so keyboard users can bypass navigation.
+
+## Fix it automatically
+
+`a11y-fixer` detects a missing or empty `lang` attribute and pages with no `main` landmark, and reports content that sits outside any landmark region:
+
+```bash
+a11y-fixer scan ./dist --fail-on error
+```
+
+Wire it into CI from the [documentation](/docs/) to keep structure correct on every pull request.

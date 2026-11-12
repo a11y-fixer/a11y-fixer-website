@@ -15,6 +15,9 @@ export default function Footer() {
               <Link href="/docs">Documentation</Link>
             </li>
             <li>
+              <Link href="/blog">Blog &amp; guides</Link>
+            </li>
+            <li>
               <a href={site.repoUrl} target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>

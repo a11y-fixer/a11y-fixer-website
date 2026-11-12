@@ -1,0 +1,49 @@
+---
+title: "a11y-fixer vs Lighthouse accessibility audit"
+description: "Lighthouse gives you an accessibility score. a11y-fixer gives you fixes. Here's how the two compare and how to use them together."
+date: "2026-11-07"
+type: "comparison"
+keywords:
+  - "a11y-fixer vs lighthouse"
+  - "lighthouse accessibility"
+  - "accessibility score"
+  - "automated accessibility fixes"
+---
+
+[Lighthouse](https://developer.chrome.com/docs/lighthouse/accessibility/) ships in Chrome DevTools and gives every page an accessibility **score** out of 100, backed by a subset of axe-core rules. It's a great first signal — but a score is a starting point, not a solution.
+
+**a11y-fixer** is focused on the step after the score: actually fixing the issues.
+
+## At a glance
+
+| | Lighthouse | a11y-fixer |
+| --- | --- | --- |
+| Accessibility score | ✅ | Reports count & severity |
+| Rule coverage | axe-core subset | WCAG 2.2 rule set |
+| Runs in CI | ✅ (Lighthouse CI) | ✅ |
+| Scans build output directory | ❌ (needs a URL) | ✅ |
+| **Automated fixes** | ❌ | ✅ |
+| SARIF / code-review output | ❌ | ✅ |
+
+## Score vs remediation
+
+Lighthouse answers "how accessible is this page right now?" with a number and a list of audits that failed. It doesn't change your code, and automated checks only catch a portion of all WCAG issues — so a 100 score is necessary, not sufficient.
+
+a11y-fixer answers "what do I change?" For deterministic failures it proposes — and optionally writes — the fix:
+
+```bash
+a11y-fixer scan https://example.com
+a11y-fixer fix ./dist --write
+```
+
+It also scans your **built output** directly (`./dist`), so you can catch issues before anything is deployed, rather than needing a live URL.
+
+## Use them together
+
+A practical workflow:
+
+1. **Lighthouse** in CI for a quick score and trend line.
+2. **a11y-fixer** to remediate the issues and gate pull requests on new regressions with `--fail-on error`.
+3. Manual testing with a screen reader for the issues no automated tool can catch.
+
+Read the [docs](/docs/) to wire a11y-fixer into your pipeline, or [start a free trial](/trial/) of the a11y-fixer-pro GitHub Action.

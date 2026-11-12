@@ -8,10 +8,20 @@
   );
 }
 
+.eyebrow {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  margin: 0 0 0.75rem;
+}
+
 .title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  margin: 0 0 0.5rem;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  max-width: 20ch;
+  margin: 0 auto 0.75rem;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .tagline {
@@ -123,4 +133,31 @@
 .quickstartLede {
   color: var(--fg-muted);
   margin-top: 0;
+}
+
+.faq {
+  padding: 3rem 0 4rem;
+}
+
+.faqList {
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.faqItem {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  background: var(--bg-subtle);
+}
+
+.faqQuestion {
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.faqAnswer {
+  margin: 0;
+  color: var(--fg-muted);
 }

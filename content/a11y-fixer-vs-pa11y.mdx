@@ -1,0 +1,50 @@
+---
+title: "a11y-fixer vs pa11y: CLI accessibility testing compared"
+description: "pa11y is a popular CLI for automated accessibility testing. See how a11y-fixer compares, including automated remediation and CI gating."
+date: "2026-11-09"
+type: "comparison"
+keywords:
+  - "a11y-fixer vs pa11y"
+  - "pa11y alternative"
+  - "cli accessibility testing"
+  - "accessibility ci"
+---
+
+[pa11y](https://pa11y.org/) is a long-standing command-line tool for automated accessibility testing. It runs HTML CodeSniffer or axe rules against a URL and prints the results — a solid, scriptable way to catch accessibility issues from the terminal or CI.
+
+**a11y-fixer** covers the same scanning job but is built to **close** issues, not just surface them.
+
+## At a glance
+
+| | pa11y | a11y-fixer |
+| --- | --- | --- |
+| CLI scanning of URLs | ✅ | ✅ |
+| Scans built HTML / `dist` output | Via config | ✅ |
+| WCAG 2.2 rule set | Depends on runner | ✅ |
+| **Automated fixes** | ❌ | ✅ |
+| CI gating on new regressions | ✅ (pa11y-ci) | ✅ built in |
+| Config file | ✅ | ✅ (`a11y-fixer.config.json`) |
+| SARIF output for code review | ❌ | ✅ |
+
+## The core difference
+
+pa11y is a **reporter**. You get a list of issues and decide what to do with each one. For large codebases, that backlog can sit untouched for months.
+
+a11y-fixer treats the report as step one and remediation as step two:
+
+```bash
+# Scan and report
+a11y-fixer scan https://example.com --report report.html
+
+# Apply safe, reviewable fixes
+a11y-fixer fix ./dist --write
+```
+
+Fixes are conservative by design — the kind of changes a reviewer would approve without debate (empty `alt`, missing labels, redundant ARIA). Anything requiring judgment is flagged, not guessed.
+
+## When to use which
+
+- **Use pa11y** if you want a mature, lightweight reporter and you're happy handling remediation manually.
+- **Use a11y-fixer** if you want the same scanning plus automated remediation and SARIF output that drops into code review.
+
+See the [documentation](/docs/) for CI setup, or read our guide on [automating accessibility checks in CI](/blog/fix-document-language-landmarks/).

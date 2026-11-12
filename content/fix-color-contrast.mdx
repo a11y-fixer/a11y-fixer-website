@@ -1,0 +1,62 @@
+---
+title: "How to fix insufficient color contrast (WCAG 1.4.3)"
+description: "Low-contrast text fails WCAG 1.4.3 and is hard to read for everyone. Learn the required contrast ratios and how to find and fix contrast issues automatically."
+date: "2026-11-06"
+type: "guide"
+keywords:
+  - "color contrast accessibility"
+  - "WCAG 1.4.3"
+  - "contrast ratio"
+  - "AA contrast"
+---
+
+Low-contrast text is the most widespread color-related accessibility failure. It fails [WCAG 1.4.3 Contrast (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) and affects people with low vision, color vision deficiencies, and anyone reading on a glary screen outdoors.
+
+## The required ratios (Level AA)
+
+| Content | Minimum contrast ratio |
+| --- | --- |
+| Normal text (< 18.66px bold or < 24px) | **4.5 : 1** |
+| Large text (≥ 18.66px bold or ≥ 24px) | **3 : 1** |
+| UI components & graphical objects (1.4.11) | **3 : 1** |
+
+Level AAA (1.4.6) raises normal text to 7:1 and large text to 4.5:1.
+
+## The failing markup
+
+```css
+.subtle {
+  color: #999999;      /* on #ffffff this is only 2.85:1 */
+  background: #ffffff;
+}
+```
+
+Gray-on-white placeholder and "muted" text is the usual culprit — it looks fine to designers on a high-quality monitor but fails the ratio.
+
+## The fix
+
+Darken the foreground (or lighten the background) until the ratio passes:
+
+```css
+.subtle {
+  color: #595959;      /* 7:1 on white — passes AA and AAA */
+  background: #ffffff;
+}
+```
+
+### Tips
+
+- Test the **actual** rendered colors, including opacity and overlapping backgrounds.
+- Don't rely on color alone to convey meaning (that's a separate criterion, 1.4.1).
+- Check hover, focus, and disabled states too — not just the default.
+- Define contrast-safe tokens once in your design system so every component inherits them.
+
+## Fix it automatically
+
+`a11y-fixer` computes the real contrast ratio for rendered text against its effective background and reports every pair below threshold, with a suggested compliant color:
+
+```bash
+a11y-fixer scan https://example.com --standard WCAG2AA
+```
+
+Because color choices can carry brand meaning, contrast fixes are proposed for review rather than written blindly. See the [docs](/docs/) for ignoring specific rules when a decision is intentional.

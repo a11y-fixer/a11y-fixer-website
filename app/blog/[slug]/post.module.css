@@ -1,0 +1,108 @@
+.article {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+  margin-bottom: 1.5rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
+}
+
+.meta {
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.prose {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.prose :global(h2) {
+  font-size: 1.6rem;
+  margin: 2.5rem 0 1rem;
+  letter-spacing: -0.01em;
+}
+
+.prose :global(h3) {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.75rem;
+}
+
+.prose :global(p),
+.prose :global(ul),
+.prose :global(ol) {
+  margin: 0 0 1.25rem;
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  padding-left: 1.5rem;
+}
+
+.prose :global(li) {
+  margin-bottom: 0.5rem;
+}
+
+.prose :global(code) {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9em;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+.prose :global(pre) {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+}
+
+.prose :global(pre code) {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.prose :global(blockquote) {
+  border-left: 3px solid var(--accent);
+  margin: 0 0 1.5rem;
+  padding: 0.25rem 0 0.25rem 1rem;
+  color: var(--fg-muted);
+}
+
+.cta {
+  margin-top: 3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  padding: 1.25rem 1.5rem;
+}
+
+.cta p {
+  margin: 0;
+}
+
+.cta code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9em;
+}

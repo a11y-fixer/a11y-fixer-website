@@ -1,0 +1,68 @@
+---
+title: "How to fix form inputs without labels (WCAG 1.3.1 & 4.1.2)"
+description: "Unlabeled form fields are invisible to screen readers. Learn how to associate labels correctly and fix missing form labels automatically."
+date: "2026-11-08"
+type: "guide"
+keywords:
+  - "form label accessibility"
+  - "input without label"
+  - "WCAG 1.3.1"
+  - "accessible forms"
+---
+
+A form control with no associated label is one of the most damaging accessibility failures: a screen reader user tabs into the field and hears "edit text, blank" with no idea what to type. It fails [WCAG 1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) and [4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html).
+
+## The failing markup
+
+```html
+<input type="email" placeholder="Email">
+
+<p>Email</p>
+<input type="email">
+```
+
+A `placeholder` is **not** a label — it disappears on focus, has poor contrast, and isn't reliably exposed as the field's accessible name. A nearby `<p>` looks like a label visually but has no programmatic association.
+
+## The fix
+
+### Preferred: a `<label>` with `for`
+
+```html
+<label for="email">Email</label>
+<input id="email" type="email">
+```
+
+The `for` attribute must match the input's `id`. Clicking the label also focuses the field — better for everyone, especially on touch.
+
+### Wrapping label (no `id` needed)
+
+```html
+<label>
+  Email
+  <input type="email">
+</label>
+```
+
+### When there's no visible text
+
+Use `aria-label` or `aria-labelledby`:
+
+```html
+<input type="search" aria-label="Search the docs">
+```
+
+## Don't forget
+
+- Every `<input>` (except `hidden`), `<select>`, and `<textarea>` needs an accessible name.
+- Groups of radios or checkboxes should sit inside a `<fieldset>` with a `<legend>`.
+- Required fields should use the `required` attribute, not just a visual asterisk.
+
+## Fix it automatically
+
+`a11y-fixer` detects controls with no accessible name and associates orphaned label text where the relationship is unambiguous:
+
+```bash
+a11y-fixer scan ./dist --standard WCAG2AA
+```
+
+See the [full documentation](/docs/) for configuring which rules run in CI.

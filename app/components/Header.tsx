@@ -20,6 +20,9 @@ export default function Header() {
               <Link href="/docs">Docs</Link>
             </li>
             <li>
+              <Link href="/blog">Blog</Link>
+            </li>
+            <li>
               <Link href="/trial">Free trial</Link>
             </li>
             <li>
