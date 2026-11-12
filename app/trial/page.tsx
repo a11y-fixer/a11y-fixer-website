@@ -4,7 +4,7 @@ import { site } from "../lib/site";
 import styles from "./trial.module.css";
 
 export const metadata: Metadata = {
-  title: `Start a free trial · ${site.name}`,
+  title: "Start a free 14-day trial",
   description:
     "Get a free 14-day a11y-fixer-pro license key and run the accessibility GitHub Action on your repositories.",
   alternates: { canonical: `${site.url}/trial/` },

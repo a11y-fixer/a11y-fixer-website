@@ -1,0 +1,70 @@
+---
+title: "How to fix invalid and redundant ARIA (WCAG 4.1.2)"
+description: "Bad ARIA is worse than no ARIA. Learn the rules of ARIA, common mistakes, and how to remove invalid or redundant attributes automatically."
+date: "2026-11-04"
+type: "guide"
+keywords:
+  - "ARIA accessibility"
+  - "invalid ARIA"
+  - "redundant role"
+  - "WCAG 4.1.2"
+---
+
+ARIA (Accessible Rich Internet Applications) attributes expose roles, states, and properties to assistive technology. Used incorrectly, they actively break accessibility — overriding native semantics, pointing at missing elements, or announcing wrong information. This is governed by [WCAG 4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html).
+
+> The first rule of ARIA: if you can use a native HTML element with the semantics you need, use it instead of repurposing a `<div>`.
+
+## Common failures
+
+### Redundant roles
+
+```html
+<!-- ❌ button already has role="button" -->
+<button role="button">Save</button>
+
+<!-- ❌ nav already has role="navigation" -->
+<nav role="navigation">…</nav>
+```
+
+Native elements come with their role built in. Re-declaring it is redundant and can mask future HTML changes.
+
+### Broken references
+
+```html
+<!-- ❌ no element with id="desc-7" exists -->
+<input aria-describedby="desc-7">
+```
+
+`aria-labelledby` / `aria-describedby` must point to IDs that exist on the page.
+
+### Invalid attribute or value
+
+```html
+<!-- ❌ aria-expanded expects true/false, not "open" -->
+<button aria-expanded="open">Menu</button>
+
+<!-- ❌ aria-hidden on a focusable element traps keyboard users -->
+<a href="/" aria-hidden="true">Home</a>
+```
+
+## The fix
+
+- **Remove redundant roles** on native elements.
+- **Fix or remove dangling references** so every `aria-*` id resolves.
+- **Use valid tokens** — `aria-expanded="true"`, not `"open"`.
+- **Never put `aria-hidden="true"`** on focusable or interactive content.
+
+```html
+<button aria-expanded="false" aria-controls="menu">Menu</button>
+<ul id="menu" hidden>…</ul>
+```
+
+## Fix it automatically
+
+`a11y-fixer` validates ARIA attributes against the WAI-ARIA spec — flagging unknown attributes, invalid values, redundant roles, and broken ID references — and removes the clearly-redundant ones:
+
+```bash
+a11y-fixer scan ./dist
+```
+
+See the [documentation](/docs/) for the complete rule set.

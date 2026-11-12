@@ -1,0 +1,45 @@
+---
+title: "a11y-fixer vs axe-core: which accessibility tool should you use?"
+description: "axe-core is the industry-standard accessibility rules engine. a11y-fixer adds automated fixes on top. Here's how they compare and when to use each."
+date: "2026-11-11"
+type: "comparison"
+keywords:
+  - "a11y-fixer vs axe"
+  - "axe-core alternative"
+  - "accessibility testing tools"
+  - "automated accessibility fixes"
+---
+
+[axe-core](https://github.com/dequelabs/axe-core) is the most widely used accessibility rules engine — it powers browser extensions, Lighthouse's accessibility audit, and countless CI integrations. If you've run an automated accessibility check, you've probably run axe.
+
+So where does **a11y-fixer** fit? The short version: axe-core tells you what's wrong; a11y-fixer tells you what's wrong **and proposes the fix**.
+
+## At a glance
+
+| | axe-core | a11y-fixer |
+| --- | --- | --- |
+| Detects WCAG violations | ✅ | ✅ (WCAG 2.2) |
+| Checks the rendered DOM | ✅ | ✅ |
+| **Applies automated fixes** | ❌ | ✅ (safe, reviewable) |
+| CLI for scanning URLs & build output | Via wrappers | ✅ built in |
+| CI gating (fail on new issues) | Via wrappers | ✅ built in |
+| JSON / SARIF output | ✅ | ✅ |
+| License | MPL-2.0 | MIT |
+
+## Detection vs remediation
+
+axe-core is a detection engine. Its output is a list of violations, each with a description and a link to learn more. Turning that list into actual code changes is left entirely to you.
+
+a11y-fixer is built around **remediation**. For the common, deterministic issues — empty `alt`, unlabeled inputs, redundant ARIA, missing `lang`, low contrast — it proposes the concrete change and can write it in place for review:
+
+```bash
+a11y-fixer scan ./dist
+a11y-fixer fix ./dist --write
+```
+
+## When to use which
+
+- **Use axe-core** if you want a pure detection engine to embed in your own tooling, or you're already invested in Deque's ecosystem.
+- **Use a11y-fixer** if you want to go from "here are 200 violations" to "here are 200 violations, 140 of which I just fixed for you." It's designed to shorten the loop between finding and fixing.
+
+They're not mutually exclusive — many teams run detection broadly and reach for automated fixes to clear the backlog. Explore the [fix catalog in the docs](/docs/) or [start a free trial](/trial/) of the a11y-fixer-pro GitHub Action.

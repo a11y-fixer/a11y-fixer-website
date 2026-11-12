@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.1.0",
+    "gray-matter": "^4.0.3",
     "next": "^15.5.28",
+    "next-mdx-remote": "^6.0.0",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },

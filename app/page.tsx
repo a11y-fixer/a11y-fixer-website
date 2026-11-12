@@ -31,6 +31,27 @@ const features = [
   },
 ];
 
+// Keep these in sync with the FAQPage JSON-LD in app/layout.tsx — Google
+// requires FAQ rich-result content to be visible on the page.
+const faqs = [
+  {
+    q: "Is a11y-fixer free?",
+    a: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. a11y-fixer-pro, the GitHub Action that proposes AI-assisted fixes on pull requests, offers a free 14-day trial.",
+  },
+  {
+    q: "Which accessibility standard does a11y-fixer check?",
+    a: "a11y-fixer scans for WCAG 2.2 violations and can target conformance levels such as WCAG 2.2 AA. It checks the rendered DOM, so it works with any framework.",
+  },
+  {
+    q: "Does a11y-fixer run in CI?",
+    a: "Yes. Run it as a CLI or GitHub Action to fail builds when new accessibility regressions appear, with JSON and SARIF output for dashboards and code review.",
+  },
+  {
+    q: "What accessibility issues can a11y-fixer fix automatically?",
+    a: "It applies safe, reviewable fixes for the most common issues: missing or empty image alt text, form controls without labels, insufficient color contrast, invalid or redundant ARIA attributes, and missing document language and landmark roles.",
+  },
+];
+
 // {/* TODO: confirm roadmap items against the real a11y-fixer */}
 const roadmap = [
   {
@@ -50,7 +71,10 @@ export default function Home() {
     <>
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.title}>{site.name}</h1>
+          <p className={styles.eyebrow}>{site.name}</p>
+          <h1 className={styles.title}>
+            Automated web accessibility testing &amp; WCAG fixes
+          </h1>
           <p className={styles.tagline}>{site.tagline}</p>
           <div className={styles.cta}>
             <Link href="/docs" className={styles.primaryBtn}>
@@ -120,6 +144,20 @@ a11y-fixer scan https://example.com --report report.html`}
             Read the <Link href="/docs">full documentation</Link> for
             configuration, CI setup, and the fix catalog.
           </p>
+        </div>
+      </section>
+
+      <section id="faq" className={styles.faq}>
+        <div className="container">
+          <h2 className={styles.sectionTitle}>Frequently asked questions</h2>
+          <dl className={styles.faqList}>
+            {faqs.map((item) => (
+              <div key={item.q} className={styles.faqItem}>
+                <dt className={styles.faqQuestion}>{item.q}</dt>
+                <dd className={styles.faqAnswer}>{item.a}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
     </>
