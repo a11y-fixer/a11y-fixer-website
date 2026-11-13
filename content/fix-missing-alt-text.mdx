@@ -50,8 +50,8 @@ Add a descriptive `alt` for informative images, and an **empty** `alt=""` for de
 `a11y-fixer` flags every `<img>`, `<area>`, and `role="img"` element missing a text alternative and, where it can infer intent safely, proposes a fix for review:
 
 ```bash
-a11y-fixer scan ./dist
-a11y-fixer fix ./dist --write
+a11y-fixer scan ./src
+a11y-fixer fix ./src
 ```
 
 Decorative images detected from context get `alt=""`; informative images are surfaced for a human to describe. Read the [fix catalog in the docs](/docs/) for the full list of what gets repaired automatically.

@@ -28,7 +28,7 @@ export default function Docs() {
         <p>Install globally with npm:</p>
         <CodeBlock label="npm install">{site.installCommand}</CodeBlock>
         <p>Or run it without installing:</p>
-        <CodeBlock label="npx">{`npx a11y-fixer scan https://example.com`}</CodeBlock>
+        <CodeBlock label="npx">{`npx @a11y-fixer/cli scan ./src --url https://example.com`}</CodeBlock>
       </section>
 
       <section aria-labelledby="usage">
@@ -36,31 +36,45 @@ export default function Docs() {
           Usage
         </h2>
         <p>
-          Point <code>scan</code> at a URL or a local directory of built HTML:
+          Point <code>scan</code> at your source directory (React/JSX and HTML),
+          or at a live page with <code>--url</code>:
         </p>
-        <CodeBlock label="Basic usage">{`# Scan a live site
-a11y-fixer scan https://example.com
+        <CodeBlock label="Basic usage">{`# Scan your source
+a11y-fixer scan ./src
 
-# Scan a build output directory
-a11y-fixer scan ./dist
+# Scan a live page with axe-core
+a11y-fixer scan ./src --url https://example.com
 
-# Apply safe automated fixes in place
-a11y-fixer fix ./dist --write`}</CodeBlock>
+# Preview fixes without writing
+a11y-fixer fix ./src --dry-run
+
+# Apply fixes in place
+a11y-fixer fix ./src`}</CodeBlock>
       </section>
 
       <section aria-labelledby="configuration">
         <h2 id="configuration" className={styles.h2}>
-          Configuration
+          Commands &amp; options
         </h2>
         <p>
-          Drop an <code>a11y-fixer.config.json</code> in your project root to
-          set defaults:
+          Three commands, each taking a source directory:
         </p>
-        <CodeBlock label="Config example">{`{
-  "standard": "WCAG2AA",
-  "ignore": ["color-contrast"],
-  "report": { "format": "html", "out": "a11y-report.html" }
-}`}</CodeBlock>
+        <CodeBlock label="Commands">{`# Report violations
+a11y-fixer scan ./src
+
+# CI gate — exits 1 if any violations are found
+a11y-fixer check ./src
+
+# Preview fixes, then apply them
+a11y-fixer fix ./src --dry-run
+a11y-fixer fix ./src`}</CodeBlock>
+        <p>
+          Common options: <code>--html</code> to scan <code>.html</code>/
+          <code>.htm</code> files with axe-core, <code>--url &lt;url&gt;</code>{" "}
+          to scan a live page, and <code>--concurrency &lt;n&gt;</code>.{" "}
+          <code>fix</code> can open an annotated pull request with{" "}
+          <code>--owner</code>, <code>--repo</code>, and <code>--base</code>.
+        </p>
       </section>
 
       <section aria-labelledby="ci">
@@ -69,7 +83,7 @@ a11y-fixer fix ./dist --write`}</CodeBlock>
         </h2>
         <p>Fail the build when new violations appear. Example GitHub Action:</p>
         <CodeBlock label="GitHub Action">{`- name: Accessibility check
-  run: npx a11y-fixer scan ./dist --fail-on error`}</CodeBlock>
+  run: npx @a11y-fixer/cli check ./src`}</CodeBlock>
       </section>
 
       <section aria-labelledby="fixes">

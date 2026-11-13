@@ -56,7 +56,7 @@ Darken the foreground (or lighten the background) until the ratio passes:
 `a11y-fixer` computes the real contrast ratio for rendered text against its effective background and reports every pair below threshold, with a suggested compliant color:
 
 ```bash
-a11y-fixer scan https://example.com --standard WCAG2AA
+a11y-fixer scan ./src --url https://example.com
 ```
 
 Because color choices can carry brand meaning, contrast fixes are proposed for review rather than written blindly. See the [docs](/docs/) for ignoring specific rules when a decision is intentional.

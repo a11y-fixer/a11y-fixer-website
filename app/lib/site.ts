@@ -24,5 +24,5 @@ export const site = {
   // Contact address shown in the footer and "What's next" section.
   contactEmail: "a11y-fixer@gmail.com",
   // Primary install command shown in the hero / docs.
-  installCommand: "npm install -g a11y-fixer",
+  installCommand: "npm install -g @a11y-fixer/cli",
 };

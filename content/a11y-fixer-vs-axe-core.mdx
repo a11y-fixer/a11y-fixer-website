@@ -21,7 +21,7 @@ So where does **a11y-fixer** fit? The short version: axe-core tells you what's w
 | Detects WCAG violations | ✅ | ✅ (WCAG 2.2) |
 | Checks the rendered DOM | ✅ | ✅ |
 | **Applies automated fixes** | ❌ | ✅ (safe, reviewable) |
-| CLI for scanning URLs & build output | Via wrappers | ✅ built in |
+| CLI for scanning source & URLs | Via wrappers | ✅ built in |
 | CI gating (fail on new issues) | Via wrappers | ✅ built in |
 | JSON / SARIF output | ✅ | ✅ |
 | License | MPL-2.0 | MIT |
@@ -33,8 +33,8 @@ axe-core is a detection engine. Its output is a list of violations, each with a 
 a11y-fixer is built around **remediation**. For the common, deterministic issues — empty `alt`, unlabeled inputs, redundant ARIA, missing `lang`, low contrast — it proposes the concrete change and can write it in place for review:
 
 ```bash
-a11y-fixer scan ./dist
-a11y-fixer fix ./dist --write
+a11y-fixer scan ./src
+a11y-fixer fix ./src
 ```
 
 ## When to use which

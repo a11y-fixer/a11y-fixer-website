@@ -21,7 +21,7 @@ keywords:
 | Accessibility score | ✅ | Reports count & severity |
 | Rule coverage | axe-core subset | WCAG 2.2 rule set |
 | Runs in CI | ✅ (Lighthouse CI) | ✅ |
-| Scans build output directory | ❌ (needs a URL) | ✅ |
+| Scans a source directory | ❌ (needs a URL) | ✅ |
 | **Automated fixes** | ❌ | ✅ |
 | SARIF / code-review output | ❌ | ✅ |
 
@@ -32,18 +32,18 @@ Lighthouse answers "how accessible is this page right now?" with a number and a 
 a11y-fixer answers "what do I change?" For deterministic failures it proposes — and optionally writes — the fix:
 
 ```bash
-a11y-fixer scan https://example.com
-a11y-fixer fix ./dist --write
+a11y-fixer scan ./src --url https://example.com
+a11y-fixer fix ./src
 ```
 
-It also scans your **built output** directly (`./dist`), so you can catch issues before anything is deployed, rather than needing a live URL.
+It also scans your **source** directly (`./src`), so you can catch issues before anything is built or deployed, rather than needing a live URL.
 
 ## Use them together
 
 A practical workflow:
 
 1. **Lighthouse** in CI for a quick score and trend line.
-2. **a11y-fixer** to remediate the issues and gate pull requests on new regressions with `--fail-on error`.
+2. **a11y-fixer** to remediate the issues and gate pull requests on new regressions with `a11y-fixer check`.
 3. Manual testing with a screen reader for the issues no automated tool can catch.
 
 Read the [docs](/docs/) to wire a11y-fixer into your pipeline, or [start a free trial](/trial/) of the a11y-fixer-pro GitHub Action.
