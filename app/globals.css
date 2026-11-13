@@ -5,6 +5,9 @@
   --fg-muted: #57606a;
   --border: #d0d7de;
   --accent: #1f6feb;
+  /* Darker accent for text/links so small text clears WCAG AA 4.5:1 on light
+     and tinted backgrounds. --accent stays for fills, borders, and focus. */
+  --accent-text: #0a58ca;
   --accent-fg: #ffffff;
   --accent-hover: #1858c5;
   --code-bg: #f6f8fa;
@@ -20,6 +23,8 @@
     --fg-muted: #9198a1;
     --border: #30363d;
     --accent: #4493f8;
+    /* On the dark background the brand accent already clears 4.5:1. */
+    --accent-text: #4493f8;
     --accent-fg: #0d1117;
     --accent-hover: #6cb0ff;
     --code-bg: #161b22;
@@ -72,10 +77,16 @@ body {
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
 }
 a:hover {
+  text-decoration: underline;
+}
+/* Links embedded in running text carry an underline so they're distinguishable
+   from the surrounding text by more than color alone (WCAG link-in-text-block).
+   Nav, cards, and buttons live outside <p>, so they stay underline-free. */
+p a {
   text-decoration: underline;
 }
 
