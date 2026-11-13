@@ -126,7 +126,7 @@ const jsonLd = {
           name: "Does a11y-fixer run in CI?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. Run it as a CLI or GitHub Action to fail builds when new accessibility regressions appear, with JSON and SARIF output for dashboards and code review.",
+            text: "Yes. Run the CLI to fail builds when new accessibility regressions appear, or drop in the a11y-fixer-pro GitHub Action to gate pull requests, scan, or automatically open fix PRs.",
           },
         },
         {
@@ -135,6 +135,14 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text: "It applies safe, reviewable fixes for the most common issues: missing or empty image alt text, form controls without labels, insufficient color contrast, invalid or redundant ARIA attributes, and missing document language and landmark roles.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do the AI-assisted fixes work?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "In fix mode, the a11y-fixer-pro GitHub Action uses Claude to repair issues that need judgment — image alt text, icon-only button labels, form control labels, and vague link text. Every change is proposed in a pull request for a human to review; nothing is pushed to your base branch. The free CLI stays fully deterministic and uses no AI.",
           },
         },
       ],
