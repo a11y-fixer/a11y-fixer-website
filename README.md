@@ -53,3 +53,5 @@ Search Console property, emitted as a verification `<meta>` tag by `app/layout.t
 - **Blog & guides** are MDX files in `content/*.mdx`. Each file's frontmatter
   (`title`, `description`, `date`, `type`, `keywords`) drives the `/blog` index,
   per-post metadata, and the sitemap. Add a file to publish a post.
+
+> Production deploys from the `a11y-fixer/a11y-fixer-website` repo on Vercel (branch `main`).
