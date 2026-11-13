@@ -64,7 +64,7 @@ Wrap your page in semantic regions and include exactly one `<main>`:
 `a11y-fixer` detects a missing or empty `lang` attribute and pages with no `main` landmark, and reports content that sits outside any landmark region:
 
 ```bash
-a11y-fixer scan ./dist --fail-on error
+a11y-fixer check ./src
 ```
 
 Wire it into CI from the [documentation](/docs/) to keep structure correct on every pull request.

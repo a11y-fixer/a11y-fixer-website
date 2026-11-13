@@ -19,11 +19,11 @@ keywords:
 | | pa11y | a11y-fixer |
 | --- | --- | --- |
 | CLI scanning of URLs | ✅ | ✅ |
-| Scans built HTML / `dist` output | Via config | ✅ |
+| Scans your source directory | Via config | ✅ |
 | WCAG 2.2 rule set | Depends on runner | ✅ |
 | **Automated fixes** | ❌ | ✅ |
 | CI gating on new regressions | ✅ (pa11y-ci) | ✅ built in |
-| Config file | ✅ | ✅ (`a11y-fixer.config.json`) |
+| Configuration | Config file | CLI flags |
 | SARIF output for code review | ❌ | ✅ |
 
 ## The core difference
@@ -34,10 +34,10 @@ a11y-fixer treats the report as step one and remediation as step two:
 
 ```bash
 # Scan and report
-a11y-fixer scan https://example.com --report report.html
+a11y-fixer scan ./src --url https://example.com
 
 # Apply safe, reviewable fixes
-a11y-fixer fix ./dist --write
+a11y-fixer fix ./src
 ```
 
 Fixes are conservative by design — the kind of changes a reviewer would approve without debate (empty `alt`, missing labels, redundant ARIA). Anything requiring judgment is flagged, not guessed.
