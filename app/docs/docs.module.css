@@ -40,6 +40,11 @@
 .content {
   min-width: 0;
 }
+/* Underline in-content links (including those in lists) so they're not
+   distinguished by color alone — WCAG link-in-text-block. */
+.content a {
+  text-decoration: underline;
+}
 
 .h1 {
   font-size: clamp(2rem, 4vw, 2.6rem);
