@@ -81,9 +81,158 @@ a11y-fixer fix ./src`}</CodeBlock>
         <h2 id="ci" className={styles.h2}>
           Continuous integration
         </h2>
-        <p>Fail the build when new violations appear. Example GitHub Action:</p>
-        <CodeBlock label="GitHub Action">{`- name: Accessibility check
+        <p>
+          The free CLI makes a simple CI gate: run <code>check</code> in any
+          workflow and fail the build when violations appear.
+        </p>
+        <CodeBlock label="CLI gate">{`- name: Accessibility check
   run: npx @a11y-fixer/cli check ./src`}</CodeBlock>
+        <p>
+          For a managed setup that also opens pull requests with fixes — and uses
+          AI for the issues that need judgment — use the{" "}
+          <a href="#github-action">a11y-fixer-pro GitHub Action</a> below.
+        </p>
+      </section>
+
+      <section aria-labelledby="github-action">
+        <h2 id="github-action" className={styles.h2}>
+          GitHub Action (a11y-fixer-pro)
+        </h2>
+        <p>
+          <strong>a11y-fixer-pro</strong> is a GitHub Action that runs a11y-fixer
+          on every pull request. It has three modes:
+        </p>
+        <ul>
+          <li>
+            <code>check</code> (default) — scan and <strong>fail the job</strong>{" "}
+            if any violations are found. A drop-in CI gate.
+          </li>
+          <li>
+            <code>scan</code> — scan and report violations as a JSON output,
+            without failing the job.
+          </li>
+          <li>
+            <code>fix</code> — apply fixes to your source and open a{" "}
+            <strong>pull request</strong> with an annotated before/after summary.
+            Add an Anthropic API key to enable{" "}
+            <a href="#ai-fixes">AI-assisted fixes</a>.
+          </li>
+        </ul>
+        <p>
+          A <code>fix</code> run commits to a new branch
+          (<code>a11y-fixer/&lt;timestamp&gt;</code>) and opens a PR titled{" "}
+          <code>a11y-fixer: fix N accessibility violation(s)</code> — it never
+          pushes to your base branch, so every change is reviewed before it
+          lands. Example workflow:
+        </p>
+        <CodeBlock label="GitHub Action workflow">{`name: Accessibility
+on: pull_request
+
+jobs:
+  a11y-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # push the fix branch
+      pull-requests: write   # open the PR
+    steps:
+      - uses: actions/checkout@v4
+      - uses: a11y-fixer/a11y-fixer-pro@v1
+        with:
+          mode: fix
+          dir: ./src
+          license-key: \${{ secrets.A11Y_FIXER_LICENSE_KEY }}
+          anthropic-api-key: \${{ secrets.ANTHROPIC_API_KEY }}
+          github-token: \${{ secrets.GITHUB_TOKEN }}`}</CodeBlock>
+        <p>
+          <code>fix</code> mode needs{" "}
+          <code>permissions: contents: write</code> and{" "}
+          <code>pull-requests: write</code> so the Action can push its branch and
+          open the PR.
+        </p>
+        <h3 className={styles.h3}>Inputs</h3>
+        <ul>
+          <li>
+            <code>license-key</code> (required) — your a11y-fixer-pro key, stored
+            as a repository secret. <a href="/trial">Start a free trial</a> to get
+            one.
+          </li>
+          <li>
+            <code>mode</code> — <code>check</code> (default), <code>scan</code>, or{" "}
+            <code>fix</code>.
+          </li>
+          <li>
+            <code>dir</code> — directory to scan (default <code>.</code>).
+          </li>
+          <li>
+            <code>anthropic-api-key</code> (optional) — enables AI-assisted fixes
+            in <code>fix</code> mode.
+          </li>
+          <li>
+            <code>github-token</code> — defaults to{" "}
+            <code>{"${{ github.token }}"}</code>; used by <code>fix</code> mode to
+            open the PR.
+          </li>
+          <li>
+            <code>base-branch</code> — base branch for the fix PR (default{" "}
+            <code>main</code>).
+          </li>
+          <li>
+            <code>url</code> — scan a live page with axe-core (
+            <code>check</code>/<code>scan</code> only). <code>html</code> —{" "}
+            scan static <code>.html</code>/<code>.htm</code> files.
+          </li>
+        </ul>
+        <p>
+          Outputs include <code>pr-url</code>, <code>fixes-applied</code>, and{" "}
+          <code>violations-before</code>/<code>violations-after</code>.
+        </p>
+      </section>
+
+      <section aria-labelledby="ai-fixes">
+        <h2 id="ai-fixes" className={styles.h2}>
+          AI-assisted fixes
+        </h2>
+        <p>
+          Some accessibility issues can&apos;t be repaired by a deterministic
+          rule — they need a judgment call about what the content means. When you
+          run the a11y-fixer-pro Action in <code>mode: fix</code> with an{" "}
+          <code>anthropic-api-key</code>, a11y-fixer uses Claude (the fast{" "}
+          <code>claude-haiku-4-5</code> model) to propose those fixes:
+        </p>
+        <ul>
+          <li>
+            <strong>Image alt text</strong> (WCAG 1.1.1) — generates a concise{" "}
+            <code>alt</code> description from the surrounding code.
+          </li>
+          <li>
+            <strong>Icon-only button names</strong> (WCAG 4.1.2) — adds an{" "}
+            <code>aria-label</code> to buttons with no accessible name.
+          </li>
+          <li>
+            <strong>Form control names</strong> (WCAG 1.3.1) — adds an{" "}
+            <code>aria-label</code> to inputs, selects, and textareas missing a
+            label.
+          </li>
+          <li>
+            <strong>Generic link text</strong> (WCAG 2.4.4) — rewrites vague links
+            like &ldquo;click here&rdquo; or &ldquo;read more&rdquo; into
+            descriptive text.
+          </li>
+        </ul>
+        <p>
+          Every AI change is proposed in a pull request for a human to review — it
+          is never pushed to your base branch. Anything the model isn&apos;t
+          confident it can safely change (for example, non-generic link text) is{" "}
+          <strong>flagged for manual review</strong> with a note rather than
+          edited. If no Anthropic key is provided, those issues are simply
+          reported for you to handle.
+        </p>
+        <p>
+          The free, MIT-licensed <code>@a11y-fixer/cli</code> stays fully
+          deterministic and uses no AI: it applies only safe, rule-based fixes and
+          reports the rest for human review. AI-assisted fixes are a feature of
+          a11y-fixer-pro.
+        </p>
       </section>
 
       <section aria-labelledby="fixes">

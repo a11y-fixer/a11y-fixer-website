@@ -5,6 +5,8 @@ const sections = [
   { href: "#usage", label: "Usage" },
   { href: "#configuration", label: "Configuration" },
   { href: "#ci", label: "Continuous integration" },
+  { href: "#github-action", label: "GitHub Action" },
+  { href: "#ai-fixes", label: "AI-assisted fixes" },
   { href: "#fixes", label: "Fix catalog" },
   { href: "#contributing", label: "Contributing" },
 ];
