@@ -13,6 +13,8 @@
     "test:all": "vitest run && playwright test"
   },
   "dependencies": {
+    "@upstash/ratelimit": "^2.2.1",
+    "@upstash/redis": "^1.41.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.1.0",
     "gray-matter": "^4.0.3",
