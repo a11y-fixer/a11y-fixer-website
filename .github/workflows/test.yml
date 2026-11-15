@@ -21,6 +21,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Accessibility source check (a11y-fixer)
+        run: npm run a11y:check
+
       - name: Unit tests
         run: npm run test:unit
 
