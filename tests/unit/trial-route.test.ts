@@ -53,13 +53,20 @@ function makeRequest(body: unknown, { raw }: { raw?: string } = {}) {
   });
 }
 
+// The route only rate-limits / logs when Upstash credentials are present. Set
+// dummy values so getRatelimit() returns the mocked limiter above (the mock
+// never dials the network, so the values themselves don't matter).
 beforeEach(() => {
   process.env.LICENSE_SIGNING_KEY = PRIVATE_PEM;
+  process.env.KV_REST_API_URL = "https://example.upstash.io";
+  process.env.KV_REST_API_TOKEN = "test-token";
 });
 
 afterEach(() => {
   if (ORIGINAL === undefined) delete process.env.LICENSE_SIGNING_KEY;
   else process.env.LICENSE_SIGNING_KEY = ORIGINAL;
+  delete process.env.KV_REST_API_URL;
+  delete process.env.KV_REST_API_TOKEN;
 });
 
 describe("POST /api/trial", () => {
