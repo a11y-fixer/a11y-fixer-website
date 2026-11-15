@@ -21,8 +21,8 @@ import { createPrivateKey, sign as cryptoSign } from "node:crypto";
  * Any other key produces tokens the Action will not accept.
  */
 
-/** Free trial length, in days. */
-export const TRIAL_DAYS = 14;
+/** Early-access key length, in days. Free during early access. */
+export const TRIAL_DAYS = 365;
 
 const DAY_SECONDS = 86400;
 
@@ -49,8 +49,8 @@ function loadPrivateKey() {
 }
 
 /**
- * Mints a signed trial key for `sub` (an email / customer id), valid for
- * `days` days from now. Defaults to the 14-day free trial.
+ * Mints a signed license key for `sub` (an email / customer id), valid for
+ * `days` days from now. Defaults to the early-access length (free for now).
  */
 export function mintTrialKey(sub: string, days: number = TRIAL_DAYS): MintResult {
   const privateKey = loadPrivateKey();

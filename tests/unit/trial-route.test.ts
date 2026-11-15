@@ -70,7 +70,7 @@ describe("POST /api/trial", () => {
     expect(typeof data.token).toBe("string");
     expect(data.token.split(".")).toHaveLength(2);
     expect(typeof data.expires).toBe("number");
-    expect(data.trialDays).toBe(14);
+    expect(data.trialDays).toBe(365);
   });
 
   it("rate-limits after 5 requests from the same IP within the window", async () => {
