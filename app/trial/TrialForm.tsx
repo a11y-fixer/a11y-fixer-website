@@ -52,7 +52,7 @@ export default function TrialForm() {
     const when = new Date(result.expires * 1000).toISOString().slice(0, 10);
     return (
       <div className={styles.result}>
-        <h2 className={styles.resultTitle}>Your {result.trialDays}-day trial key</h2>
+        <h2 className={styles.resultTitle}>Your free early-access key</h2>
         <p className={styles.expiry}>Valid until {when}. Keep it secret.</p>
 
         <p className={styles.step}>
@@ -67,7 +67,8 @@ export default function TrialForm() {
         <CodeBlock label="Workflow usage" copyable>{workflowSnippet(SECRET_NAME)}</CodeBlock>
 
         <p className={styles.note}>
-          Need a fresh key after it expires? Just come back and request another.
+          It&rsquo;s free during early access. Need a fresh key when it expires?
+          Just come back and request another.
         </p>
       </div>
     );
@@ -108,7 +109,7 @@ export default function TrialForm() {
       </div>
 
       <button className={styles.submit} type="submit" disabled={loading}>
-        {loading ? "Issuing…" : "Get trial key"}
+        {loading ? "Issuing…" : "Get your free key"}
       </button>
 
       {error && (

@@ -14,16 +14,25 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const MAX_PER_WINDOW = 5;
 
-function getRedis() {
+// Upstash is optional: without credentials (local dev, CI, previews) we skip
+// rate limiting and request logging rather than crash the minting endpoint.
+function hasUpstash() {
+  return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
+
+function getRedis(): Redis | null {
+  if (!hasUpstash()) return null;
   return new Redis({
     url: process.env.KV_REST_API_URL!,
     token: process.env.KV_REST_API_TOKEN!,
   });
 }
 
-function getRatelimit() {
+function getRatelimit(): Ratelimit | null {
+  const redis = getRedis();
+  if (!redis) return null;
   return new Ratelimit({
-    redis: getRedis(),
+    redis,
     limiter: Ratelimit.slidingWindow(MAX_PER_WINDOW, "1 h"),
     prefix: "rl:trial",
   });
@@ -55,12 +64,15 @@ export async function POST(req: Request) {
   }
 
   const ip = clientIp(req);
-  const { success } = await getRatelimit().limit(ip);
-  if (!success) {
-    return NextResponse.json(
-      { error: "Too many requests. Please try again later." },
-      { status: 429 },
-    );
+  const ratelimit = getRatelimit();
+  if (ratelimit) {
+    const { success } = await ratelimit.limit(ip);
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 },
+      );
+    }
   }
 
   try {
@@ -68,7 +80,7 @@ export async function POST(req: Request) {
 
     // Fire-and-forget: log the trial request. Never blocks the response.
     getRedis()
-      .lpush("trials", JSON.stringify({ email: email.trim(), at: Date.now(), ip }))
+      ?.lpush("trials", JSON.stringify({ email: email.trim(), at: Date.now(), ip }))
       .catch((err) => console.error("[trial] failed to log to Redis:", err));
 
     return NextResponse.json({ token, expires, trialDays: TRIAL_DAYS });

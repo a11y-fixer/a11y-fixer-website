@@ -23,7 +23,7 @@ export default function Header() {
               <Link href="/blog">Blog</Link>
             </li>
             <li>
-              <Link href="/trial">Free trial</Link>
+              <Link href="/trial">Get it free</Link>
             </li>
             <li>
               <a href={site.repoUrl} target="_blank" rel="noopener noreferrer">

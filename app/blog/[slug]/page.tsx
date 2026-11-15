@@ -108,8 +108,8 @@ export default async function BlogPost({
           <p>
             Catch these issues automatically. Install {site.name}:{" "}
             <code>{site.installCommand}</code>, or{" "}
-            <Link href="/trial/">start a free 14-day trial</Link> of the
-            a11y-fixer-pro GitHub Action.
+            <Link href="/trial/">get a free key</Link> for the
+            a11y-fixer-pro GitHub Action — free during early access.
           </p>
         </aside>
       </article>

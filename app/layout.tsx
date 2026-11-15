@@ -110,7 +110,7 @@ const jsonLd = {
           name: "Is a11y-fixer free?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. a11y-fixer-pro, the GitHub Action that proposes AI-assisted fixes on pull requests, offers a free 14-day trial.",
+            text: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. a11y-fixer-pro, the GitHub Action that proposes AI-assisted fixes on pull requests, is free during early access.",
           },
         },
         {

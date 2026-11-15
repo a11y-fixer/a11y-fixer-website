@@ -35,7 +35,7 @@ const features = [
 const faqs = [
   {
     q: "Is a11y-fixer free?",
-    a: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. a11y-fixer-pro, the GitHub Action that proposes AI-assisted fixes on pull requests, offers a free 14-day trial.",
+    a: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. a11y-fixer-pro, the GitHub Action that proposes AI-assisted fixes on pull requests, is free during early access.",
   },
   {
     q: "Which accessibility standard does a11y-fixer check?",

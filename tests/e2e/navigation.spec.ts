@@ -8,7 +8,7 @@ test.describe("primary navigation", () => {
   for (const { name, path } of [
     { name: "Docs", path: "/docs/" },
     { name: "Blog", path: "/blog/" },
-    { name: "Free trial", path: "/trial/" },
+    { name: "Get it free", path: "/trial/" },
   ]) {
     test(`header link "${name}" navigates to ${path}`, async ({ page }) => {
       const nav = page.getByRole("navigation", { name: "Primary" });

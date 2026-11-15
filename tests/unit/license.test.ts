@@ -37,7 +37,7 @@ describe("mintTrialKey", () => {
     expect(parts[1].length).toBeGreaterThan(0);
   });
 
-  it("encodes exactly { v: 1, sub, exp } with a 14-day expiry", () => {
+  it("encodes exactly { v: 1, sub, exp } with the default expiry", () => {
     const now = Math.floor(Date.now() / 1000);
     const { token, expires } = mintTrialKey("you@company.com");
     const payload = decodePayload(token);

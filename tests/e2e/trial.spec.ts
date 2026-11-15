@@ -7,9 +7,9 @@ test.describe("trial-key form", () => {
 
   test("issues a key for a valid email and renders copyable snippets", async ({ page }) => {
     await page.locator("#trial-email").fill("you@company.com");
-    await page.getByRole("button", { name: /get trial key/i }).click();
+    await page.getByRole("button", { name: /get your free key/i }).click();
 
-    await expect(page.getByRole("heading", { name: /trial key/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /early-access key/i })).toBeVisible();
 
     // Two copyable snippets: the minted token and the workflow usage.
     await expect(page.getByRole("button", { name: /copy/i })).toHaveCount(2);
@@ -21,7 +21,7 @@ test.describe("trial-key form", () => {
 
   test("shows an inline error for an invalid email", async ({ page }) => {
     await page.locator("#trial-email").fill("not-an-email");
-    await page.getByRole("button", { name: /get trial key/i }).click();
+    await page.getByRole("button", { name: /get your free key/i }).click();
 
     const alert = page.locator("#trial-error");
     await expect(alert).toBeVisible();
