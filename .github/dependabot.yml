@@ -1,0 +1,30 @@
+version: 2
+updates:
+  # Application dependencies. Weekly, grouped so review stays manageable.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 10
+    groups:
+      production-dependencies:
+        dependency-type: production
+      development-dependencies:
+        dependency-type: development
+    labels:
+      - dependencies
+
+  # Pin and update the actions used in CI (supply-chain hygiene).
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Etc/UTC
+    labels:
+      - dependencies
+      - ci

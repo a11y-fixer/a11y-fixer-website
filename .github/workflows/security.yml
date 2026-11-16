@@ -1,0 +1,47 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, so advisories published after a PR merges still get caught.
+    - cron: "0 9 * * 1"
+
+# Least privilege by default; jobs opt into more where needed.
+permissions:
+  contents: read
+
+jobs:
+  # Fail the build on known-vulnerable dependencies (high/critical only, so
+  # low-severity advisory noise doesn't block shipping).
+  dependency-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # Blocks on any NEW high/critical advisory; known transitive advisories
+      # are triaged in audit-ci.jsonc (documented risk acceptance).
+      - name: Dependency audit (high/critical, allowlisted)
+        run: npx --yes audit-ci@^7 --config audit-ci.jsonc
+
+  # Secret scanning. We scan the working tree with TruffleHog's filesystem
+  # mode (via its official image) rather than gitleaks-action, which requires a
+  # paid GITLEAKS_LICENSE for organization-owned repos. Filesystem mode needs no
+  # base/head and behaves the same on push, pull_request, and schedule.
+  # This complements GitHub's native secret-scanning push protection.
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: TruffleHog secret scan
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/repo" \
+            trufflesecurity/trufflehog:latest \
+            filesystem /repo --results=verified,unknown --fail --no-update
