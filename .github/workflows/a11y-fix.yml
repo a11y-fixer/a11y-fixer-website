@@ -1,0 +1,34 @@
+name: a11y auto-fix
+
+# Runs the paid a11y-fixer-pro Action in fix mode: it scans ./app, applies
+# fixes it can, and opens a pull request. Fix mode opens PRs, so this is NOT a
+# per-PR gate — it runs manually (workflow_dispatch) and on a weekly schedule.
+#
+# Required repository secrets:
+#   A11Y_FIXER_LICENSE_KEY — a11y-fixer-pro license (free during early access)
+#   ANTHROPIC_API_KEY      — optional; enables AI-assisted fixes (alt text,
+#                            link/button names, form labels)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: a11y-fixer/a11y-fixer-pro@v1
+        with:
+          mode: fix
+          dir: ./app
+          base-branch: main
+          license-key: ${{ secrets.A11Y_FIXER_LICENSE_KEY }}
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}

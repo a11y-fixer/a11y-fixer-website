@@ -21,6 +21,22 @@ npm run dev     # http://localhost:3000
 npm run build
 ```
 
+## Accessibility checks (dogfooding)
+
+This repo uses its own products on its own source:
+
+- **CI gate** — every push/PR runs `npm run a11y:check` (`@a11y-fixer/cli check ./app`),
+  which fails if the JSX source has WCAG violations. Run it locally with
+  `npm run a11y:check`; use `npm run a11y:scan` for a non-failing report.
+  This complements the rendered-page axe tests in `tests/e2e/a11y.spec.ts`
+  (those test output; the CLI tests source).
+- **Auto-fix PRs** — `.github/workflows/a11y-fix.yml` runs the
+  `a11y-fixer/a11y-fixer-pro@v1` Action in `fix` mode on a weekly schedule and
+  via manual dispatch, opening a PR with any fixes. It needs two repo secrets:
+  - `A11Y_FIXER_LICENSE_KEY` — a11y-fixer-pro license (free during early access).
+  - `ANTHROPIC_API_KEY` — optional; enables AI-assisted fixes (alt text, link/
+    button names, form labels).
+
 ## Deploy
 
 The site is hosted on Vercel and deploys automatically on push (preview
