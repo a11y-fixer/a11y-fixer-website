@@ -10,6 +10,9 @@ vi.mock("@upstash/redis", () => ({
     lpush() {
       return Promise.resolve(1);
     }
+    ltrim() {
+      return Promise.resolve("OK");
+    }
   },
 }));
 
@@ -108,6 +111,20 @@ describe("POST /api/trial", () => {
     expect(data.token.split(".")).toHaveLength(2);
     expect(typeof data.expires).toBe("number");
     expect(data.trialDays).toBe(365);
+  });
+
+  it("fails closed with 503 in production when Upstash is not configured", async () => {
+    delete process.env.KV_REST_API_URL;
+    delete process.env.KV_REST_API_TOKEN;
+    const prevVercelEnv = process.env.VERCEL_ENV;
+    process.env.VERCEL_ENV = "production";
+    try {
+      const res = await POST(makeRequest({ email: "you@company.com" }));
+      expect(res.status).toBe(503);
+    } finally {
+      if (prevVercelEnv === undefined) delete process.env.VERCEL_ENV;
+      else process.env.VERCEL_ENV = prevVercelEnv;
+    }
   });
 
   it("rate-limits after 5 requests from the same IP within the window", async () => {
