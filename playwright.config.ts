@@ -26,7 +26,9 @@ export default defineConfig({
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
   ],
   webServer: {
-    command: "npm run build && npm run start",
+    // CI builds in a dedicated workflow step, so just serve it here; locally,
+    // build on the fly.
+    command: process.env.CI ? "npm run start" : "npm run build && npm run start",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
