@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
-import { Ratelimit } from "@upstash/ratelimit";
 import { mintTrialKey, SigningKeyMissingError, TRIAL_DAYS } from "../../lib/license";
+import {
+  clientIp,
+  getRatelimit,
+  getRedis,
+  isProduction,
+  upstashConfigured,
+} from "../../lib/ratelimit";
 
 // Ed25519 signing uses node:crypto, which needs the Node.js runtime (not Edge).
 export const runtime = "nodejs";
@@ -14,36 +19,23 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const MAX_PER_WINDOW = 5;
 
-// Upstash is optional: without credentials (local dev, CI, previews) we skip
-// rate limiting and request logging rather than crash the minting endpoint.
-function hasUpstash() {
-  return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
-}
-
-function getRedis(): Redis | null {
-  if (!hasUpstash()) return null;
-  return new Redis({
-    url: process.env.KV_REST_API_URL!,
-    token: process.env.KV_REST_API_TOKEN!,
-  });
-}
-
-function getRatelimit(): Ratelimit | null {
-  const redis = getRedis();
-  if (!redis) return null;
-  return new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(MAX_PER_WINDOW, "1 h"),
-    prefix: "rl:trial",
-  });
-}
-
-function clientIp(req: Request): string {
-  const fwd = req.headers.get("x-forwarded-for");
-  return fwd ? fwd.split(",")[0].trim() : "unknown";
-}
+// Retention cap for the PII log (email + ip). The `trials` list is trimmed to
+// this many most-recent records on every write so it cannot grow without bound.
+// See SECURITY.md for the data-retention policy and deletion path.
+const TRIALS_MAX_RECORDS = 5000;
 
 export async function POST(req: Request) {
+  // Fail closed: in production, a missing Upstash config means the rate limiter
+  // is unavailable. Refuse to mint rather than run the public endpoint wide
+  // open. In dev/CI/preview we intentionally run without rate limiting.
+  if (isProduction() && !upstashConfigured()) {
+    console.error("[trial] Upstash is not configured in production; refusing to mint");
+    return NextResponse.json(
+      { error: "Trial issuing is temporarily unavailable." },
+      { status: 503 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();
@@ -64,7 +56,7 @@ export async function POST(req: Request) {
   }
 
   const ip = clientIp(req);
-  const ratelimit = getRatelimit();
+  const ratelimit = getRatelimit("rl:trial", MAX_PER_WINDOW);
   if (ratelimit) {
     const { success } = await ratelimit.limit(ip);
     if (!success) {
@@ -78,10 +70,15 @@ export async function POST(req: Request) {
   try {
     const { token, expires } = mintTrialKey(email.trim());
 
-    // Fire-and-forget: log the trial request. Never blocks the response.
-    getRedis()
-      ?.lpush("trials", JSON.stringify({ email: email.trim(), at: Date.now(), ip }))
-      .catch((err) => console.error("[trial] failed to log to Redis:", err));
+    // Fire-and-forget: log the trial request and trim to the retention cap.
+    // Never blocks the response.
+    const redis = getRedis();
+    if (redis) {
+      redis
+        .lpush("trials", JSON.stringify({ email: email.trim(), at: Date.now(), ip }))
+        .then(() => redis.ltrim("trials", 0, TRIALS_MAX_RECORDS - 1))
+        .catch((err) => console.error("[trial] failed to log to Redis:", err));
+    }
 
     return NextResponse.json({ token, expires, trialDays: TRIAL_DAYS });
   } catch (err) {

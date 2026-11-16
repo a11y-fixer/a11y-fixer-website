@@ -12,8 +12,16 @@ for (const route of allRoutes()) {
     page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
     // Uncaught console errors, but not the generic "Failed to load resource"
     // network noise (its text carries no URL) — real 404s are caught below.
+    // Also ignore the benign Vercel analytics scripts: they 404 to an HTML page
+    // off-Vercel, and X-Content-Type-Options: nosniff then makes Chromium log a
+    // "Refused to execute script" error. On a real Vercel deploy they serve with
+    // the correct MIME, so this is environment noise, not a page bug.
     page.on("console", (msg) => {
-      if (msg.type() === "error" && !/Failed to load resource/.test(msg.text())) {
+      if (
+        msg.type() === "error" &&
+        !/Failed to load resource/.test(msg.text()) &&
+        !benign.test(msg.text())
+      ) {
         errors.push(`console: ${msg.text()}`);
       }
     });
