@@ -1,0 +1,34 @@
+{
+  // Blocking dependency-vulnerability gate (see .github/workflows/security.yml).
+  // Fails CI on any NEW high/critical advisory. The allowlist below records
+  // advisories we have triaged and accepted for now — each with a reason — so
+  // the gate stays green on known issues while still catching new ones. This is
+  // the documented risk-acceptance evidence an auditor looks for; revisit the
+  // list whenever `npm audit` changes.
+  //
+  // Triage snapshot (2026-11-16): all entries are transitive.
+  //  - postcss / sharp advisories come in through `next`; the only fix is the
+  //    breaking Next.js 16 upgrade (tracked separately, not a prod-exploitable
+  //    path for this static-ish marketing site at build time).
+  //  - basic-ftp / extract-zip / zod(chromium-bidi) advisories come in through
+  //    the puppeteer chain under the dev-only @a11y-fixer CLI (build/CI tooling,
+  //    never shipped to users).
+  //  - minimatch (moderate) is under @typescript-eslint, dev-only.
+  "high": true,
+  "allowlist": [
+    "GHSA-5pm8-86m8-9m6r", // basic-ftp (dev: @a11y-fixer > puppeteer)
+    "GHSA-6g55-p6wh-862q", // postcss (via next)
+    "GHSA-7pqw-9j4j-h8q3", // extract-zip (dev: puppeteer)
+    "GHSA-c475-qrg2-pj4r", // basic-ftp (dev: puppeteer)
+    "GHSA-f88m-g3jw-g9cj", // sharp (via next)
+    "GHSA-fxqj-rqcc-2cmp", // postcss (via next)
+    "GHSA-g3hv-75wg-m249", // minimatch (dev: @typescript-eslint)
+    "GHSA-jmr9-qjv8-65gv", // extract-zip (dev: puppeteer)
+    "GHSA-mrhx-c7xc-m3w5", // zod (dev: chromium-bidi > puppeteer)
+    "GHSA-qx2v-qp2m-jg93", // postcss (via next)
+    "GHSA-r28c-9q8g-f849", // postcss (via next)
+    "GHSA-r4jh-29pc-gfqr", // basic-ftp (dev: puppeteer)
+    "GHSA-rgj7-g3m4-5g8c", // sharp (via next)
+    "GHSA-wq5f-xc86-pv6w" // sharp (via next)
+  ]
+}
