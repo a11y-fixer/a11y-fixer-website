@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
@@ -20,7 +20,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.1.0",
     "gray-matter": "^4.0.3",
-    "next": "^15.5.28",
+    "next": "^16.4.6",
     "next-mdx-remote": "^6.0.0",
     "react": "19.1.1",
     "react-dom": "19.1.1"
@@ -33,7 +33,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "^15.5.28",
+    "eslint-config-next": "^16.4.6",
     "typescript": "^5",
     "vitest": "^4.1.12"
   }
