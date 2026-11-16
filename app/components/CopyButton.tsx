@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import styles from "./CodeBlock.module.css";
+
+// Clipboard support never changes after load, so there's nothing to subscribe
+// to. useSyncExternalStore lets us read it without a setState-in-effect: render
+// the button during SSR (server snapshot = true), then reconcile on the client.
+const subscribe = () => () => {};
+const getSupported = () =>
+  typeof navigator !== "undefined" && !!navigator.clipboard;
 
 export default function CopyButton({
   value,
@@ -11,13 +18,10 @@ export default function CopyButton({
   label?: string;
 }) {
   const [copied, setCopied] = useState(false);
-  const [supported, setSupported] = useState(true);
+  const supported = useSyncExternalStore(subscribe, getSupported, () => true);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setSupported(
-      typeof navigator !== "undefined" && !!navigator.clipboard,
-    );
     return () => {
       if (timer.current) clearTimeout(timer.current);
     };
