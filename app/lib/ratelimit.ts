@@ -16,13 +16,16 @@ export function upstashConfigured(): boolean {
 }
 
 /**
- * True in a real production deployment. On Vercel, `VERCEL_ENV` is the
- * authoritative signal (`production` | `preview` | `development`); fall back to
- * NODE_ENV elsewhere. Previews are intentionally NOT production.
+ * True only in a real Vercel production deployment. `VERCEL_ENV` is the
+ * authoritative signal (`production` | `preview` | `development`) and is always
+ * set on Vercel; it is unset locally, in CI, and under `next start` (which sets
+ * NODE_ENV=production for a prod build but is NOT a production deploy). We
+ * deliberately do NOT fall back to NODE_ENV, so the fail-closed check never
+ * trips a local/CI prod build that legitimately runs without Upstash. Previews
+ * are intentionally NOT production.
  */
 export function isProduction(): boolean {
-  if (process.env.VERCEL_ENV) return process.env.VERCEL_ENV === "production";
-  return process.env.NODE_ENV === "production";
+  return process.env.VERCEL_ENV === "production";
 }
 
 export function getRedis(): Redis | null {
