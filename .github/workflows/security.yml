@@ -29,14 +29,19 @@ jobs:
       - name: Dependency audit (high/critical, allowlisted)
         run: npx --yes audit-ci@^7 --config audit-ci.jsonc
 
-  # Secret scanning on the full history of the PR/branch.
+  # Secret scanning. We scan the working tree with TruffleHog's filesystem
+  # mode (via its official image) rather than gitleaks-action, which requires a
+  # paid GITLEAKS_LICENSE for organization-owned repos. Filesystem mode needs no
+  # base/head and behaves the same on push, pull_request, and schedule.
+  # This complements GitHub's native secret-scanning push protection.
   secret-scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+      - name: TruffleHog secret scan
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/repo" \
+            trufflesecurity/trufflehog:latest \
+            filesystem /repo --results=verified,unknown --fail --no-update
