@@ -1,0 +1,16 @@
+# Code owners — review is required from these owners on matching paths.
+# Enforced only when branch protection has "Require review from Code Owners"
+# enabled (see docs/compliance/soc2-controls.md and the org checklist).
+
+# Default owner for everything.
+*                        @jajjer
+
+# Security-sensitive surfaces get explicit ownership so changes to auth,
+# key-signing, request handling, headers, and CI can't merge unreviewed.
+/app/api/                @jajjer
+/app/lib/license.ts      @jajjer
+/app/lib/ratelimit.ts    @jajjer
+/next.config.mjs         @jajjer
+/.github/                @jajjer
+/audit-ci.jsonc          @jajjer
+/SECURITY.md             @jajjer
