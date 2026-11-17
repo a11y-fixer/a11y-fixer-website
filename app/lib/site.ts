@@ -22,7 +22,7 @@ export const site = {
   ],
   repoUrl: "https://github.com/a11y-fixer/a11y-fixer",
   // Contact address shown in the footer and "What's next" section.
-  contactEmail: "a11y-fixer@gmail.com",
+  contactEmail: "a11yfixer@gmail.com",
   // Primary install command shown in the hero / docs.
   installCommand: "npm install -g @a11y-fixer/cli",
 };
