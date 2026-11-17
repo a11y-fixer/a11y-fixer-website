@@ -14,6 +14,11 @@
   //    the puppeteer chain under the dev-only @a11y-fixer CLI (build/CI tooling,
   //    never shipped to users).
   //  - minimatch (moderate) is under @typescript-eslint, dev-only.
+  //  - picomatch comes in through the ESLint / Vite / Vitest build+test
+  //    toolchain (typescript-eslint, eslint-config-next, vite, vitest,
+  //    tinyglobby, fdir); dev-only, never shipped to users. The v2 line
+  //    (micromatch under @next/eslint-plugin-next) can only be removed by the
+  //    breaking eslint-config-next@14 downgrade.
   "high": true,
   "allowlist": [
     "GHSA-5pm8-86m8-9m6r", // basic-ftp (dev: @a11y-fixer > puppeteer)
@@ -21,6 +26,7 @@
     "GHSA-7pqw-9j4j-h8q3", // extract-zip (dev: puppeteer)
     "GHSA-c475-qrg2-pj4r", // basic-ftp (dev: puppeteer)
     "GHSA-f88m-g3jw-g9cj", // sharp (via next)
+    "GHSA-fc5q-39xc-vjpf", // picomatch (dev: eslint/vite/vitest toolchain)
     "GHSA-fxqj-rqcc-2cmp", // postcss (via next)
     "GHSA-g3hv-75wg-m249", // minimatch (dev: @typescript-eslint)
     "GHSA-jmr9-qjv8-65gv", // extract-zip (dev: puppeteer)
