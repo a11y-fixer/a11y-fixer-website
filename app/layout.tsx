@@ -118,7 +118,7 @@ const jsonLd = {
           name: "Which accessibility standard does a11y-fixer check?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "a11y-fixer scans for WCAG 2.2 violations and can target conformance levels such as WCAG 2.2 AA. It checks the rendered DOM, so it works with any framework.",
+            text: "a11y-fixer scans for WCAG 2.2 violations and can target conformance levels such as WCAG 2.2 AA. It checks your React/JSX and HTML source by default, and can scan the rendered DOM of a running page (any framework) with --url.",
           },
         },
         {

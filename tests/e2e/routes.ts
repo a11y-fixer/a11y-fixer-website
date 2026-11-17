@@ -18,6 +18,7 @@ export function allRoutes(): string[] {
     "/docs/",
     "/blog/",
     "/trial/",
+    "/privacy/",
     ...blogSlugs().map((slug) => `/blog/${slug}/`),
   ];
 }

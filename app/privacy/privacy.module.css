@@ -1,0 +1,42 @@
+.section {
+  padding: 4rem 0 3rem;
+}
+
+.lede {
+  color: var(--fg-muted);
+  max-width: 65ch;
+  margin: 0 0 2rem;
+}
+
+.updated {
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+  margin: 0 0 2rem;
+}
+
+.content {
+  max-width: 70ch;
+}
+
+.content h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.content p,
+.content li {
+  color: var(--fg);
+  line-height: 1.6;
+}
+
+.content a {
+  text-decoration: underline;
+}
+
+.content ul {
+  padding-left: 1.25rem;
+}
+
+.content li {
+  margin: 0.4rem 0;
+}

@@ -1,4 +1,4 @@
-// Central place for site-wide constants. {/* TODO: confirm these against the real project */}
+// Central place for site-wide constants.
 export const site = {
   name: "a11y-fixer",
   tagline: "Find and fix accessibility issues in your web app — automatically.",

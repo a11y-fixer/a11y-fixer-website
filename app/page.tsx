@@ -22,7 +22,7 @@ const features = [
   },
   {
     title: "Framework agnostic",
-    body: "Works with React, Vue, Svelte, or plain HTML — it checks the rendered DOM, not your source.",
+    body: "Scans your React/JSX and HTML source by default; point it at a running URL to check the rendered DOM of any framework — Vue, Svelte, plain HTML.",
   },
   {
     title: "Open source core",
@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     q: "Which accessibility standard does a11y-fixer check?",
-    a: "a11y-fixer scans for WCAG 2.2 violations and can target conformance levels such as WCAG 2.2 AA. It checks the rendered DOM, so it works with any framework.",
+    a: "a11y-fixer scans for WCAG 2.2 violations and can target conformance levels such as WCAG 2.2 AA. It checks your React/JSX and HTML source by default, and can scan the rendered DOM of a running page (any framework) with --url.",
   },
   {
     q: "Does a11y-fixer run in CI?",
@@ -104,11 +104,11 @@ export default function Home() {
         <div className="container">
           <h2 className={styles.sectionTitle}>Quick start</h2>
           <p className={styles.quickstartLede}>
-            Scan a running site and write a report in two commands:
+            Scan your source — and optionally a running page — in two commands:
           </p>
           <CodeBlock label="Quick start commands">
             {`${site.installCommand}
-a11y-fixer scan https://example.com --report report.html`}
+a11y-fixer scan ./src --url https://example.com`}
           </CodeBlock>
           <p>
             Read the <Link href="/docs">full documentation</Link> for

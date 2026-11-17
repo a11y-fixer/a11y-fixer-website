@@ -101,3 +101,15 @@
   color: var(--fg-muted);
   font-size: 0.9rem;
 }
+
+.docsLink {
+  margin: 1.25rem 0 0.5rem;
+  font-weight: 600;
+}
+
+.privacyNote {
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+  max-width: 60ch;
+  margin: 1.25rem 0 0;
+}
