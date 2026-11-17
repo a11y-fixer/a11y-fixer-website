@@ -12,10 +12,26 @@ interface TrialSuccess {
 
 const SECRET_NAME = "A11Y_FIXER_LICENSE_KEY";
 
+// A complete, copy-pasteable workflow. Keep in sync with the example in
+// app/docs/page.tsx ("GitHub Action (a11y-fixer-pro)").
 function workflowSnippet(secretName: string): string {
-  return `- uses: a11y-fixer/a11y-fixer-pro@v1
-  with:
-    license-key: \${{ secrets.${secretName} }}`;
+  return `name: Accessibility
+on: pull_request
+
+jobs:
+  a11y-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # push the fix branch
+      pull-requests: write   # open the PR
+    steps:
+      - uses: actions/checkout@v4
+      - uses: a11y-fixer/a11y-fixer-pro@v1
+        with:
+          mode: fix
+          dir: ./src
+          license-key: \${{ secrets.${secretName} }}
+          anthropic-api-key: \${{ secrets.ANTHROPIC_API_KEY }}  # optional: AI-assisted fixes`;
 }
 
 export default function TrialForm() {
@@ -62,13 +78,26 @@ export default function TrialForm() {
         <CodeBlock label="Your license key" copyable>{result.token}</CodeBlock>
 
         <p className={styles.step}>
-          <strong>2.</strong> Reference it in your workflow:
+          <strong>2.</strong> Add a workflow at{" "}
+          <code>.github/workflows/accessibility.yml</code>:
         </p>
-        <CodeBlock label="Workflow usage" copyable>{workflowSnippet(SECRET_NAME)}</CodeBlock>
+        <CodeBlock label="GitHub Action workflow" copyable>{workflowSnippet(SECRET_NAME)}</CodeBlock>
+
+        <p className={styles.docsLink}>
+          <a href="/docs#github-action">
+            Full setup, every input, and how AI-assisted fixes work →
+          </a>
+        </p>
 
         <p className={styles.note}>
-          It&rsquo;s free during early access. Need a fresh key when it expires?
-          Just come back and request another.
+          Don&rsquo;t want the Action? The free, open-source{" "}
+          <code>@a11y-fixer/cli</code> gates CI with no key —{" "}
+          <a href="/docs#ci">run <code>check</code> in any workflow</a>.
+        </p>
+
+        <p className={styles.note}>
+          a11y-fixer-pro is free during early access. Need a fresh key when it
+          expires? Just come back and request another.
         </p>
       </div>
     );

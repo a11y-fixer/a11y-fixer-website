@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   },
 };
 
-// {/* TODO: replace example commands/flags with the real a11y-fixer CLI */}
 export default function Docs() {
   return (
     <>

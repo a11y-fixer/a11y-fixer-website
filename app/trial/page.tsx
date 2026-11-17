@@ -22,6 +22,10 @@ export default function TrialPage() {
           required; it&rsquo;s free while we&rsquo;re in early access.
         </p>
         <TrialForm />
+        <p className={styles.privacyNote}>
+          We use your email only to issue your key and send occasional
+          early-access updates. See our <a href="/privacy">Privacy Policy</a>.
+        </p>
       </div>
     </section>
   );
