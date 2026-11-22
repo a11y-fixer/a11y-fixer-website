@@ -178,8 +178,9 @@ jobs:
         <h3 className={styles.h3}>Inputs</h3>
         <ul>
           <li>
-            <code>license-key</code> — required for private repos; public repos
-            run free. <a href="/trial">Start a free trial</a> to get a key.
+            <code>license-key</code> — free for every repo, public or private,
+            during early access. <a href="/trial">Grab a free key</a> and add it
+            as a repository secret.
           </li>
           <li>
             <code>mode</code> — <code>check</code> (default), <code>scan</code>, or{" "}
