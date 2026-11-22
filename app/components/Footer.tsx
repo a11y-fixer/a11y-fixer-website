@@ -35,6 +35,9 @@ export default function Footer() {
               <Link href="/privacy">Privacy</Link>
             </li>
             <li>
+              <Link href="/terms">Terms</Link>
+            </li>
+            <li>
               <a href={`mailto:${site.contactEmail}`}>Contact</a>
             </li>
           </ul>
