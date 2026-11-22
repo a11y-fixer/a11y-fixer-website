@@ -1,10 +1,10 @@
 import { createPrivateKey, sign as cryptoSign } from "node:crypto";
 
 /**
- * Mints a11y-fixer-pro license keys on the server.
+ * Mints a11y-fixer license keys on the server.
  *
  * The wire format here MUST stay byte-identical to the two other issuers in the
- * a11y-fixer-pro repo, or the GitHub Action will reject what we produce:
+ * a11y-fixer/a11y-fixer repo, or the GitHub Action will reject what we produce:
  *   - scripts/issue-license.mjs (maintainer CLI)
  *   - packages/github-action/src/license-format.test.ts (pins this exact shape)
  * and it is verified by packages/github-action/src/license.ts `verifyLicenseKey`

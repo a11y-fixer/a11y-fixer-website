@@ -59,10 +59,10 @@ Use `aria-label` or `aria-labelledby`:
 
 ## Fix it automatically
 
-`a11y-fixer` detects controls with no accessible name and associates orphaned label text where the relationship is unambiguous:
+The free CLI detects every control with no accessible name:
 
 ```bash
 a11y-fixer scan ./src
 ```
 
-See the [full documentation](/docs/) for configuring which rules run in CI.
+Giving a control the *right* name needs to read the surrounding content, so labels are an **AI-assisted fix**: run the [a11y-fixer GitHub Action](/docs/#github-action) in `fix` mode with an AI provider key and it proposes an accessible name for each unlabeled input, select, and textarea as a pull request for review. See the [full documentation](/docs/) to wire it into CI.

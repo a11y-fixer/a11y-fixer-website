@@ -31,11 +31,11 @@ This repo uses its own products on its own source:
   This complements the rendered-page axe tests in `tests/e2e/a11y.spec.ts`
   (those test output; the CLI tests source).
 - **Auto-fix PRs** — `.github/workflows/a11y-fix.yml` runs the
-  `a11y-fixer/a11y-fixer-pro@v1` Action in `fix` mode on a weekly schedule and
+  `a11y-fixer/a11y-fixer@v1` Action in `fix` mode on a weekly schedule and
   via manual dispatch, opening a PR with any fixes. It needs two repo secrets:
-  - `A11Y_FIXER_LICENSE_KEY` — a11y-fixer-pro license (free during early access).
+  - `A11Y_FIXER_LICENSE_KEY` — a11y-fixer license key (free during early access).
   - `ANTHROPIC_API_KEY` — optional; enables AI-assisted fixes (alt text, link/
-    button names, form labels).
+    button names, form labels). Set `ai-provider` to use OpenAI or Google instead.
 
 ## Deploy
 

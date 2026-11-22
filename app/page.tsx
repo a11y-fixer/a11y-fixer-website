@@ -10,15 +10,15 @@ const features = [
   },
   {
     title: "Safe auto-fixes",
-    body: "Apply conservative, reviewable fixes for common issues — missing alt text, labels, contrast, and ARIA.",
+    body: "The free CLI applies conservative, deterministic fixes for common issues — document language, color contrast, tabindex, heading order, and more — and reports the rest.",
   },
   {
     title: "AI-assisted fixes on PRs",
-    body: "The a11y-fixer-pro GitHub Action uses Claude to repair the issues that need judgment — alt text, button and form labels, vague link text — and proposes every change in a pull request for review.",
+    body: "The a11y-fixer GitHub Action uses an LLM (Anthropic, OpenAI, or Google) to repair the issues that need judgment — alt text, button and form labels, vague link text — and proposes every change in a pull request for review.",
   },
   {
     title: "GitHub Action built in",
-    body: "Run as a CLI or drop in the a11y-fixer-pro Action to gate pull requests, scan, or open fix PRs automatically.",
+    body: "Run as a CLI or drop in the a11y-fixer GitHub Action to gate pull requests, scan, or open fix PRs automatically.",
   },
   {
     title: "Framework agnostic",
@@ -35,7 +35,7 @@ const features = [
 const faqs = [
   {
     q: "Is a11y-fixer free?",
-    a: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. a11y-fixer-pro, the GitHub Action that proposes AI-assisted fixes on pull requests, is free during early access.",
+    a: "Yes. The a11y-fixer CLI is open source and MIT-licensed, free to use from your terminal or in CI. The a11y-fixer GitHub Action, which proposes AI-assisted fixes on pull requests, is free during early access.",
   },
   {
     q: "Which accessibility standard does a11y-fixer check?",
@@ -43,15 +43,15 @@ const faqs = [
   },
   {
     q: "Does a11y-fixer run in CI?",
-    a: "Yes. Run the CLI to fail builds when new accessibility regressions appear, or drop in the a11y-fixer-pro GitHub Action to gate pull requests, scan, or automatically open fix PRs.",
+    a: "Yes. Run the CLI to fail builds when new accessibility regressions appear, or drop in the a11y-fixer GitHub Action to gate pull requests, scan, or automatically open fix PRs.",
   },
   {
     q: "What accessibility issues can a11y-fixer fix automatically?",
-    a: "It applies safe, reviewable fixes for the most common issues: missing or empty image alt text, form controls without labels, insufficient color contrast, invalid or redundant ARIA attributes, and missing document language and landmark roles.",
+    a: "The free CLI applies deterministic fixes for issues like document language, color contrast, tabindex, heading order, and list structure. The a11y-fixer GitHub Action adds AI-assisted fixes for image alt text, form labels, and button and link names. Issues such as invalid ARIA and missing landmarks are detected and reported for a human to resolve.",
   },
   {
     q: "How do the AI-assisted fixes work?",
-    a: "In fix mode, the a11y-fixer-pro GitHub Action uses Claude to repair issues that need judgment — image alt text, icon-only button labels, form control labels, and vague link text. Every change is proposed in a pull request for a human to review; nothing is pushed to your base branch. The free CLI stays fully deterministic and uses no AI.",
+    a: "In fix mode, the a11y-fixer GitHub Action uses an LLM (Anthropic, OpenAI, or Google) to repair issues that need judgment — image alt text, icon-only button labels, form control labels, and vague link text. Every change is proposed in a pull request for a human to review; nothing is pushed to your base branch. The free CLI stays fully deterministic and uses no AI.",
   },
 ];
 
