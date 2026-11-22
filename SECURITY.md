@@ -60,7 +60,7 @@ Both require the `ADMIN_SECRET` bearer token and every call is audit-logged.
   - `ADMIN_SECRET` — bearer token for the admin logs/delete endpoint. Compared in
     constant time (`crypto.timingSafeEqual`).
 - **Signing-key rotation.** Trial tokens are valid for 365 days and are verified
-  by the a11y-fixer-pro GitHub Action against the embedded public key. Rotating
+  by the a11y-fixer GitHub Action against the embedded public key. Rotating
   `LICENSE_SIGNING_KEY` today would invalidate all live tokens, because the token
   format carries no key id. **Before rotating in anger**, add a `kid` to the
   token payload and teach the verifier to accept multiple public keys, then

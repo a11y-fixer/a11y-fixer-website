@@ -5,7 +5,7 @@ import styles from "./docs.module.css";
 
 export const metadata: Metadata = {
   title: "Documentation",
-  description: `${site.name} documentation: install the CLI, scan pages for WCAG violations, apply automated fixes, configure rules, and gate pull requests in CI.`,
+  description: `${site.name} documentation: install the CLI, scan source and live pages for WCAG violations, apply automated fixes, set a CI baseline, and gate pull requests.`,
   alternates: {
     canonical: "/docs",
   },
@@ -35,14 +35,19 @@ export default function Docs() {
           Usage
         </h2>
         <p>
-          Point <code>scan</code> at your source directory (React/JSX and HTML),
-          or at a live page with <code>--url</code>:
+          Point <code>scan</code> at your source directory (React/JSX by
+          default), at HTML with <code>--html</code>, at Markdown with{" "}
+          <code>--markdown</code>, or at a live page with <code>--url</code>:
         </p>
-        <CodeBlock label="Basic usage">{`# Scan your source
+        <CodeBlock label="Basic usage">{`# Scan your JSX/TSX source
 a11y-fixer scan ./src
 
 # Scan a live page with axe-core
 a11y-fixer scan ./src --url https://example.com
+
+# Scan HTML files, or Markdown files
+a11y-fixer scan ./public --html
+a11y-fixer scan ./docs --markdown
 
 # Preview fixes without writing
 a11y-fixer fix ./src --dry-run
@@ -69,10 +74,34 @@ a11y-fixer fix ./src --dry-run
 a11y-fixer fix ./src`}</CodeBlock>
         <p>
           Common options: <code>--html</code> to scan <code>.html</code>/
-          <code>.htm</code> files with axe-core, <code>--url &lt;url&gt;</code>{" "}
-          to scan a live page, and <code>--concurrency &lt;n&gt;</code>.{" "}
-          <code>fix</code> can open an annotated pull request with{" "}
-          <code>--owner</code>, <code>--repo</code>, and <code>--base</code>.
+          <code>.htm</code> files with axe-core, <code>--markdown</code> to scan{" "}
+          <code>.md</code>/<code>.markdown</code> files,{" "}
+          <code>--url &lt;url&gt;</code> to scan a live page, and{" "}
+          <code>--concurrency &lt;n&gt;</code>. <code>fix</code> can open an
+          annotated pull request with <code>--owner</code>, <code>--repo</code>,
+          and <code>--base</code>, and stamp a page language with{" "}
+          <code>--lang &lt;tag&gt;</code>.
+        </p>
+      </section>
+
+      <section aria-labelledby="baseline">
+        <h2 id="baseline" className={styles.h2}>
+          Baseline mode
+        </h2>
+        <p>
+          On an existing codebase you rarely want CI to fail on every
+          pre-existing violation. Record a baseline once, then have{" "}
+          <code>check</code> fail only on <strong>new</strong> violations:
+        </p>
+        <CodeBlock label="Baseline">{`# Record the current violations as the accepted baseline
+a11y-fixer check ./src --baseline --update-baseline
+
+# In CI: pass unless a NEW violation appears
+a11y-fixer check ./src --baseline`}</CodeBlock>
+        <p>
+          The baseline is written to <code>.a11y-baseline.json</code> (override
+          the path with <code>--baseline &lt;file&gt;</code>). Commit it so the
+          whole team shares the same accepted set, then burn it down over time.
         </p>
       </section>
 
@@ -89,17 +118,17 @@ a11y-fixer fix ./src`}</CodeBlock>
         <p>
           For a managed setup that also opens pull requests with fixes — and uses
           AI for the issues that need judgment — use the{" "}
-          <a href="#github-action">a11y-fixer-pro GitHub Action</a> below.
+          <a href="#github-action">a11y-fixer GitHub Action</a> below.
         </p>
       </section>
 
       <section aria-labelledby="github-action">
         <h2 id="github-action" className={styles.h2}>
-          GitHub Action (a11y-fixer-pro)
+          GitHub Action
         </h2>
         <p>
-          <strong>a11y-fixer-pro</strong> is a GitHub Action that runs a11y-fixer
-          on every pull request. It has three modes:
+          The <strong>a11y-fixer GitHub Action</strong> runs a11y-fixer on every
+          pull request. It has three modes:
         </p>
         <ul>
           <li>
@@ -113,16 +142,14 @@ a11y-fixer fix ./src`}</CodeBlock>
           <li>
             <code>fix</code> — apply fixes to your source and open a{" "}
             <strong>pull request</strong> with an annotated before/after summary.
-            Add an Anthropic API key to enable{" "}
+            Add an AI provider key to enable{" "}
             <a href="#ai-fixes">AI-assisted fixes</a>.
           </li>
         </ul>
         <p>
-          A <code>fix</code> run commits to a new branch
-          (<code>a11y-fixer/&lt;timestamp&gt;</code>) and opens a PR titled{" "}
-          <code>a11y-fixer: fix N accessibility violation(s)</code> — it never
-          pushes to your base branch, so every change is reviewed before it
-          lands. Example workflow:
+          A <code>fix</code> run commits to a timestamped branch and opens a pull
+          request summarizing the fixes — it never pushes to your base branch, so
+          every change is reviewed before it lands. Example workflow:
         </p>
         <CodeBlock label="GitHub Action workflow">{`name: Accessibility
 on: pull_request
@@ -135,7 +162,7 @@ jobs:
       pull-requests: write   # open the PR
     steps:
       - uses: actions/checkout@v4
-      - uses: a11y-fixer/a11y-fixer-pro@v1
+      - uses: a11y-fixer/a11y-fixer@v1
         with:
           mode: fix
           dir: ./src
@@ -151,9 +178,8 @@ jobs:
         <h3 className={styles.h3}>Inputs</h3>
         <ul>
           <li>
-            <code>license-key</code> (required) — your a11y-fixer-pro key, stored
-            as a repository secret. <a href="/trial">Start a free trial</a> to get
-            one.
+            <code>license-key</code> — required for private repos; public repos
+            run free. <a href="/trial">Start a free trial</a> to get a key.
           </li>
           <li>
             <code>mode</code> — <code>check</code> (default), <code>scan</code>, or{" "}
@@ -163,8 +189,18 @@ jobs:
             <code>dir</code> — directory to scan (default <code>.</code>).
           </li>
           <li>
-            <code>anthropic-api-key</code> (optional) — enables AI-assisted fixes
-            in <code>fix</code> mode.
+            <code>ai-provider</code> — <code>anthropic</code> (default),{" "}
+            <code>openai</code>, or <code>google</code>; enables AI-assisted
+            fixes in <code>fix</code> mode.
+          </li>
+          <li>
+            <code>ai-api-key</code> — the key for the chosen provider.{" "}
+            <code>anthropic-api-key</code> is a shortcut that also selects the
+            Anthropic provider.
+          </li>
+          <li>
+            <code>ai-model</code> (optional) — override the model; defaults to a
+            fast, low-cost model for the provider.
           </li>
           <li>
             <code>github-token</code> — defaults to{" "}
@@ -176,14 +212,30 @@ jobs:
             <code>main</code>).
           </li>
           <li>
-            <code>url</code> — scan a live page with axe-core (
-            <code>check</code>/<code>scan</code> only). <code>html</code> —{" "}
-            scan static <code>.html</code>/<code>.htm</code> files.
+            <code>url</code> — scan a live page with axe-core.{" "}
+            <code>html</code> — scan static <code>.html</code>/<code>.htm</code>{" "}
+            files. <code>markdown</code> — scan <code>.md</code>/
+            <code>.markdown</code> files.
+          </li>
+          <li>
+            <code>cookies</code> — JSON array of cookies (each with{" "}
+            <code>name</code>, <code>value</code>, <code>domain</code>) for
+            scanning authenticated URLs.
+          </li>
+          <li>
+            <code>cache-file</code> — path to a cross-run cache of AI responses,
+            to cut repeat cost. <code>learning</code> — <code>on</code> (default)
+            records your accepted fixes as examples for future runs;{" "}
+            <code>off</code> disables it.
           </li>
         </ul>
         <p>
-          Outputs include <code>pr-url</code>, <code>fixes-applied</code>, and{" "}
-          <code>violations-before</code>/<code>violations-after</code>.
+          Outputs: <code>pr-url</code>, <code>fixes-applied</code>,{" "}
+          <code>fixes-reverted</code>, <code>regressions-detected</code>,{" "}
+          <code>violations-before</code>, <code>violations-after</code>, and{" "}
+          <code>violations</code> (the full JSON report). Before committing, a{" "}
+          <code>fix</code> run re-scans to verify each change and reverts any that
+          introduces a regression.
         </p>
       </section>
 
@@ -194,9 +246,9 @@ jobs:
         <p>
           Some accessibility issues can&apos;t be repaired by a deterministic
           rule — they need a judgment call about what the content means. When you
-          run the a11y-fixer-pro Action in <code>mode: fix</code> with an{" "}
-          <code>anthropic-api-key</code>, a11y-fixer uses Claude (the fast{" "}
-          <code>claude-haiku-4-5</code> model) to propose those fixes:
+          run the Action in <code>mode: fix</code> with an AI provider key
+          (Anthropic, OpenAI, or Google via <code>ai-provider</code>),
+          a11y-fixer uses an LLM to propose those fixes:
         </p>
         <ul>
           <li>
@@ -230,7 +282,7 @@ jobs:
           The free, MIT-licensed <code>@a11y-fixer/cli</code> stays fully
           deterministic and uses no AI: it applies only safe, rule-based fixes and
           reports the rest for human review. AI-assisted fixes are a feature of
-          a11y-fixer-pro.
+          the GitHub Action.
         </p>
       </section>
 
@@ -239,15 +291,34 @@ jobs:
           Fix catalog
         </h2>
         <p>
-          a11y-fixer can automatically repair the most common issues, including:
+          The free CLI applies <strong>deterministic, rule-based</strong> fixes —
+          no AI, no network:
         </p>
         <ul>
-          <li>Missing or empty image alternative text</li>
-          <li>Form controls without associated labels</li>
+          <li>Missing or invalid document language (<code>lang</code>)</li>
           <li>Insufficient color contrast</li>
-          <li>Invalid or redundant ARIA attributes</li>
-          <li>Missing document language and landmark roles</li>
+          <li>Problematic <code>tabindex</code> values</li>
+          <li>
+            Meta refresh redirects, heading-order jumps, and broken list
+            structure
+          </li>
+          <li>Auto-fixable <code>jsx-a11y</code> lint rules</li>
+          <li>
+            Markdown: heading order and empty table headers (with{" "}
+            <code>--markdown</code>)
+          </li>
         </ul>
+        <p>
+          The GitHub Action adds <a href="#ai-fixes">AI-assisted fixes</a> for
+          issues that need judgment — image alt text, form-control labels, and
+          button and link names.
+        </p>
+        <p>
+          Everything else — redundant or invalid ARIA, missing landmark regions,
+          keyboard and focus-order issues, and more — is{" "}
+          <strong>detected and reported</strong> for a human to resolve rather
+          than changed automatically.
+        </p>
       </section>
 
       <section aria-labelledby="contributing">

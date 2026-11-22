@@ -1,6 +1,6 @@
 ---
 title: "How to fix invalid and redundant ARIA (WCAG 4.1.2)"
-description: "Bad ARIA is worse than no ARIA. Learn the rules of ARIA, common mistakes, and how to remove invalid or redundant attributes automatically."
+description: "Bad ARIA is worse than no ARIA. Learn the rules of ARIA, common mistakes, how to fix invalid or redundant attributes, and how to catch them automatically in CI."
 date: "2026-11-04"
 type: "guide"
 keywords:
@@ -59,12 +59,12 @@ Native elements come with their role built in. Re-declaring it is redundant and 
 <ul id="menu" hidden>…</ul>
 ```
 
-## Fix it automatically
+## Catch it automatically
 
-`a11y-fixer` validates ARIA attributes against the WAI-ARIA spec — flagging unknown attributes, invalid values, redundant roles, and broken ID references — and removes the clearly-redundant ones:
+`a11y-fixer` validates ARIA against the WAI-ARIA spec — flagging unknown attributes, invalid values, redundant roles, and broken ID references — so these surface on every scan:
 
 ```bash
 a11y-fixer scan ./src
 ```
 
-See the [documentation](/docs/) for the complete rule set.
+ARIA problems are **reported for review** rather than rewritten automatically: changing roles and relationships safely needs human judgment about intent. Wire the scan into CI from the [documentation](/docs/) so bad ARIA can't slip into a pull request unnoticed.

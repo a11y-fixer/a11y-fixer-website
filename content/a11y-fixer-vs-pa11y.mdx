@@ -22,9 +22,9 @@ keywords:
 | Scans your source directory | Via config | ✅ |
 | WCAG 2.2 rule set | Depends on runner | ✅ |
 | **Automated fixes** | ❌ | ✅ |
-| CI gating on new regressions | ✅ (pa11y-ci) | ✅ built in |
+| CI gating on new regressions | ✅ (pa11y-ci) | ✅ built in, with a baseline |
 | Configuration | Config file | CLI flags |
-| SARIF output for code review | ❌ | ✅ |
+| SARIF to the Security tab | ❌ | ✅ (via the GitHub Action) |
 
 ## The core difference
 
@@ -40,11 +40,11 @@ a11y-fixer scan ./src --url https://example.com
 a11y-fixer fix ./src
 ```
 
-Fixes are conservative by design — the kind of changes a reviewer would approve without debate (empty `alt`, missing labels, redundant ARIA). Anything requiring judgment is flagged, not guessed.
+Fixes are conservative by design — the CLI makes deterministic changes (missing `lang`, contrast, heading order), and the GitHub Action adds AI-assisted repairs for alt text, labels, and link text. Anything that can't be changed safely, like invalid ARIA, is flagged rather than guessed.
 
 ## When to use which
 
 - **Use pa11y** if you want a mature, lightweight reporter and you're happy handling remediation manually.
-- **Use a11y-fixer** if you want the same scanning plus automated remediation and SARIF output that drops into code review.
+- **Use a11y-fixer** if you want the same scanning plus automated remediation, a CI baseline, and SARIF that drops into GitHub's Security tab via the Action.
 
 See the [documentation](/docs/) for CI setup, or read our guide on [automating accessibility checks in CI](/blog/fix-document-language-landmarks/).

@@ -13,7 +13,7 @@ interface TrialSuccess {
 const SECRET_NAME = "A11Y_FIXER_LICENSE_KEY";
 
 // A complete, copy-pasteable workflow. Keep in sync with the example in
-// app/docs/page.tsx ("GitHub Action (a11y-fixer-pro)").
+// app/docs/page.tsx ("GitHub Action").
 function workflowSnippet(secretName: string): string {
   return `name: Accessibility
 on: pull_request
@@ -26,7 +26,7 @@ jobs:
       pull-requests: write   # open the PR
     steps:
       - uses: actions/checkout@v4
-      - uses: a11y-fixer/a11y-fixer-pro@v1
+      - uses: a11y-fixer/a11y-fixer@v1
         with:
           mode: fix
           dir: ./src
@@ -96,8 +96,8 @@ export default function TrialForm() {
         </p>
 
         <p className={styles.note}>
-          a11y-fixer-pro is free during early access. Need a fresh key when it
-          expires? Just come back and request another.
+          The a11y-fixer GitHub Action is free during early access. Need a fresh
+          key when it expires? Just come back and request another.
         </p>
       </div>
     );

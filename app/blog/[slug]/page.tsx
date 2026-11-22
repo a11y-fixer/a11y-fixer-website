@@ -109,7 +109,7 @@ export default async function BlogPost({
             Catch these issues automatically. Install {site.name}:{" "}
             <code>{site.installCommand}</code>, or{" "}
             <Link href="/trial/">get a free key</Link> for the
-            a11y-fixer-pro GitHub Action — free during early access.
+            a11y-fixer GitHub Action — free during early access.
           </p>
         </aside>
       </article>
