@@ -2,6 +2,7 @@
 export const site = {
   name: "a11y-fixer",
   tagline: "Find and fix accessibility issues in your web app — automatically.",
+  mission: "Make the web accessible to everyone — and keep it that way.",
   description:
     "a11y-fixer is an open-source accessibility testing tool that scans your web pages for WCAG 2.2 violations and applies safe, automated fixes — from the CLI or in CI — so your product works for everyone.",
   // Canonical production origin (apex custom domain, see public/CNAME).
@@ -21,7 +22,7 @@ export const site = {
     "open source accessibility",
   ],
   repoUrl: "https://github.com/a11y-fixer/a11y-fixer",
-  // Contact address shown in the footer and "What's next" section.
+  // Contact address shown in the footer.
   contactEmail: "a11yfixer@gmail.com",
   // Primary install command shown in the hero / docs.
   installCommand: "npm install -g @a11y-fixer/cli",

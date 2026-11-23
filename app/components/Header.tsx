@@ -17,6 +17,9 @@ export default function Header() {
               <Link href="/#features">Features</Link>
             </li>
             <li>
+              <Link href="/about">About</Link>
+            </li>
+            <li>
               <Link href="/docs">Docs</Link>
             </li>
             <li>

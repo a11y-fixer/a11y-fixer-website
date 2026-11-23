@@ -12,6 +12,9 @@ export default function Footer() {
         <nav aria-label="Footer">
           <ul className={styles.links}>
             <li>
+              <Link href="/about">About &amp; roadmap</Link>
+            </li>
+            <li>
               <Link href="/docs">Documentation</Link>
             </li>
             <li>
