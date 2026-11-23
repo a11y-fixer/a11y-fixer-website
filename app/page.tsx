@@ -88,7 +88,7 @@ export default function Home() {
 
       <section id="features" className={styles.features}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Why a11y-fixer</h2>
+          <h2 className={styles.sectionTitle}>What a11y-fixer does today</h2>
           <ul className={styles.grid}>
             {features.map((f) => (
               <li key={f.title} className={styles.card}>
@@ -97,6 +97,21 @@ export default function Home() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className={styles.whatsNext}>
+        <div className="container">
+          <h2 className={styles.sectionTitle}>{site.mission}</h2>
+          <p className={styles.quickstartLede}>
+            Automated scanning is where we start, not where we stop. We&apos;re
+            building toward continuous, provable accessibility — runtime
+            monitoring, smarter AI fixes under human review, and a conformance
+            record you can trust.
+          </p>
+          <p>
+            <Link href="/about">Read our mission and roadmap</Link>.
+          </p>
         </div>
       </section>
 
