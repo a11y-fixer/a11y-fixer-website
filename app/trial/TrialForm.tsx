@@ -137,7 +137,12 @@ export default function TrialForm() {
         />
       </div>
 
-      <button className={styles.submit} type="submit" disabled={loading}>
+      <button
+        className={styles.submit}
+        type="submit"
+        disabled={loading}
+        aria-label={loading ? "Issuing your free key" : "Get your free key"}
+      >
         {loading ? "Issuing…" : "Get your free key"}
       </button>
 
